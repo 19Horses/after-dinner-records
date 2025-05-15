@@ -1,16 +1,16 @@
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-import Home from './pages/Home';
+import { styled } from 'styled-components';
+import { Landing } from './pages/Landing';
 
-const client = new ApolloClient({
-  uri: 'http://localhost:1337/graphql/',
-  cache: new InMemoryCache(),
-});
+const Wrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
+`;
 
 const App = () => {
   return (
-    <ApolloProvider client={client}>
-      <Home />
-    </ApolloProvider>
+    <Wrapper>
+      <Landing />
+    </Wrapper>
   );
 };
 

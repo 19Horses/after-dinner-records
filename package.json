@@ -1,5 +1,5 @@
 {
-  "name": "frontend-template-with-cms",
+  "name": "after-dinner-records",
   "private": true,
   "workspaces": [
     "frontend",
