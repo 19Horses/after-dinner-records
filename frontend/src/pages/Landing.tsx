@@ -1,19 +1,9 @@
 import { OrbitControls, Sphere } from '@react-three/drei';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { useRef, useState } from 'react';
-import { Vector3 } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-
-const cameraPositions = {
-  initial: {
-    lookAt: new Vector3(0, 0, 0),
-    position: new Vector3(15, 1, 2),
-  },
-  nextParty: {
-    lookAt: new Vector3(-3.6, 0, 8.5),
-    position: new Vector3(-2, 0, 6.5),
-  },
-};
+import { cameraPositions } from './cameraPositions';
+import { NextPartyPoster } from '../components/NextPartyPoster';
 
 export const Landing = () => {
   const gltf = useLoader(GLTFLoader, './backyard.glb');
@@ -57,8 +47,7 @@ export const Landing = () => {
           enableRotate={doneTransitioning}
         />
         <primitive position={[0, 0, 0]} object={gltf.scene} />
-        <Sphere args={[1, 16, 16]} position={[0, 0, 0]} />
-        <Sphere args={[1, 16, 16]} position={[-2, 0, 7]} />
+        <NextPartyPoster />
       </Canvas>
       <button
         style={{
