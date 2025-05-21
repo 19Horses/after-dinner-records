@@ -1,15 +1,18 @@
-import { OrbitControls, Sphere } from '@react-three/drei';
+import { OrbitControls } from '@react-three/drei';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { cameraPositions } from './cameraPositions';
+import { NavBar } from '../components/Footer';
 import { NextPartyPoster } from '../components/NextPartyPoster';
+import { CameraPosition, cameraPositions } from './cameraPositions';
+import { Socials } from '../components/Socials';
+import { Vector3 } from 'three';
 
 export const Landing = () => {
   const gltf = useLoader(GLTFLoader, './backyard.glb');
-  const [doneTransitioning, setDoneTransitioning] = useState(false);
   const [cameraPosition, setCameraPosition] = useState(cameraPositions.initial);
-  const lookAtRef = useRef(cameraPositions.initial.lookAt);
+  const [isAtStart, setIsAtStart] = useState(true);
+  const lookAtRef = useRef(new Vector3(0, 0, 0));
 
   const CameraController = () => {
     useFrame(({ camera }, delta) => {
@@ -19,17 +22,15 @@ export const Landing = () => {
       lookAtRef.current.lerp(targetLookAt, delta * 3);
       camera.lookAt(lookAtRef.current);
 
-      if (doneTransitioning) {
-        return;
-      }
       camera.position.lerp(targetPosition, delta * 3);
-
-      if (camera.position.distanceTo(targetPosition) < 0.05) {
-        setDoneTransitioning(true);
-      }
     });
     return null;
   };
+
+  const moveTo = useCallback((newCamera: CameraPosition) => {
+    if (isAtStart) setIsAtStart(false);
+    setCameraPosition(newCamera);
+  }, []);
 
   return (
     <>
@@ -39,30 +40,14 @@ export const Landing = () => {
         <directionalLight position={[10, 10, 10]} />
         <OrbitControls
           enableZoom={false}
-          // minPolarAngle={0}
-          // maxPolarAngle={Math.PI / 2}
-          // minAzimuthAngle={-Math.PI / 4}
-          // maxAzimuthAngle={Math.PI / 4}
-          enablePan={doneTransitioning}
-          enableRotate={doneTransitioning}
+          enablePan={isAtStart}
+          enableRotate={isAtStart}
         />
         <primitive position={[0, 0, 0]} object={gltf.scene} />
         <NextPartyPoster />
+        <Socials />
       </Canvas>
-      <button
-        style={{
-          position: 'fixed',
-          bottom: '24px',
-          left: '50%',
-          transform: 'translate(-50%)',
-        }}
-        onClick={() => {
-          setDoneTransitioning(false);
-          setCameraPosition(cameraPositions.nextParty);
-        }}
-      >
-        Next party
-      </button>
+      <NavBar moveTo={moveTo} />
     </>
   );
 };
