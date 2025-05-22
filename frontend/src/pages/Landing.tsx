@@ -1,51 +1,53 @@
 import { OrbitControls } from '@react-three/drei';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
-import { useState } from 'react';
-import { Vector3 } from 'three';
+import { useCallback, useRef, useState } from 'react';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { NavBar } from '../components/Footer';
+import { NextPartyPoster } from '../components/NextPartyPoster';
+import { CameraPosition, cameraPositions } from './cameraPositions';
+import { Socials } from '../components/Socials';
+import { Vector3 } from 'three';
 
 export const Landing = () => {
   const gltf = useLoader(GLTFLoader, './backyard.glb');
-  const [isZoomedOut, setIsZoomedOut] = useState(true);
-  const [doneTransitioning, setDoneTransitioning] = useState(false);
+  const [cameraPosition, setCameraPosition] = useState(cameraPositions.initial);
+  const [isAtStart, setIsAtStart] = useState(true);
+  const lookAtRef = useRef(new Vector3(0, 0, 0));
 
   const CameraController = () => {
     useFrame(({ camera }, delta) => {
-      const targetLookAt = isZoomedOut
-        ? new Vector3(0, 0, 0)
-        : new Vector3(0, 1, 0);
-      camera.lookAt(targetLookAt);
+      const targetLookAt = cameraPosition.lookAt;
+      const targetPosition = cameraPosition.position;
 
-      if (doneTransitioning) {
-        return;
-      }
-      const targetPosition = isZoomedOut
-        ? new Vector3(10, 10, 10)
-        : new Vector3(1, 1, 2);
+      lookAtRef.current.lerp(targetLookAt, delta * 3);
+      camera.lookAt(lookAtRef.current);
 
       camera.position.lerp(targetPosition, delta * 3);
-      if (camera.position.distanceTo(targetPosition) < 0.05) {
-        setDoneTransitioning(true);
-      }
     });
     return null;
   };
 
+  const moveTo = useCallback((newCamera: CameraPosition) => {
+    if (isAtStart) setIsAtStart(false);
+    setCameraPosition(newCamera);
+  }, []);
+
   return (
-    <Canvas camera={{ position: [-20, -20, -20] }}>
-      <CameraController />
-      <ambientLight />
-      <directionalLight position={[10, 10, 10]} />
-      <OrbitControls
-        enableZoom={false}
-        minPolarAngle={0}
-        maxPolarAngle={Math.PI / 2}
-        minAzimuthAngle={-Math.PI / 4}
-        maxAzimuthAngle={Math.PI / 4}
-        enablePan={doneTransitioning}
-        enableRotate={doneTransitioning}
-      />
-      <primitive position={[0, 0, 0]} object={gltf.scene} />
-    </Canvas>
+    <>
+      <Canvas camera={{ position: [-20, -20, -20] }}>
+        <CameraController />
+        <ambientLight />
+        <directionalLight position={[10, 10, 10]} />
+        <OrbitControls
+          enableZoom={false}
+          enablePan={isAtStart}
+          enableRotate={isAtStart}
+        />
+        <primitive position={[0, 0, 0]} object={gltf.scene} />
+        <NextPartyPoster />
+        <Socials />
+      </Canvas>
+      <NavBar moveTo={moveTo} />
+    </>
   );
 };
