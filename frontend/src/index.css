@@ -2,7 +2,17 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
+@font-face {
+  font-family: 'Erika';
+  src: url('assets/erika.ttf');
+}
+
 body {
+  font-family: 'Erika';
   margin: 0;
   overflow: hidden;
+}
+
+button {
+  font-family: 'Erika';
 }
