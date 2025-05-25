@@ -30,7 +30,8 @@ export const Landing = () => {
   const gltf = useLoader(GLTFLoader, './backyard.glb');
   const [page, setPage] = useState(pages.initial);
   const [isAtStart, setIsAtStart] = useState(true);
-  const lookAtRef = useRef(new Vector3(0, 0, 0));
+  const start = new Vector3(0, 0, 0);
+  const lookAtRef = useRef(start);
   const [doneTransitioning, setDoneTransitioning] = useState(false);
 
   const CameraController = () => {
@@ -72,7 +73,7 @@ export const Landing = () => {
         />
         <primitive position={[0, 0, 0]} object={gltf.scene} />
         {page.id === 'initial' && (
-          <Html zIndexRange={[-1, -1]} fullscreen>
+          <Html zIndexRange={[0, 0]} fullscreen>
             <TitleWrapper>
               <Title>AFTER DINNER RECORDS</Title>
             </TitleWrapper>
