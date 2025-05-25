@@ -2,7 +2,7 @@ import { useFrame, useLoader } from '@react-three/fiber';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import spotifyImg from '../assets/spotify-logo.png';
-import { cameraPositions } from '../pages/cameraPositions';
+import { pages } from '../pages/pages';
 
 export const Socials = () => {
   const [hovered, setHovered] = useState(false);
@@ -18,8 +18,6 @@ export const Socials = () => {
   useFrame((_, delta) => {
     if (meshRef.current) {
       meshRef.current.rotation.y += delta * 0.3;
-      // meshRef.current.rotation.x += delta * 0.3;
-      // meshRef.current.rotation.z += delta * 0.5;
     }
   });
 
@@ -27,7 +25,7 @@ export const Socials = () => {
     <mesh
       onPointerEnter={() => setHovered(true)}
       onPointerLeave={() => setHovered(false)}
-      position={cameraPositions.socials.lookAt}
+      position={pages.socials.camera.lookAt}
       ref={meshRef}
     >
       <circleGeometry args={[0.3, 128]} />

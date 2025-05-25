@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { CameraPosition, cameraPositions } from '../pages/cameraPositions';
+import { Page, pages } from '../pages/pages';
 
 const Footer = styled.footer`
   position: fixed;
@@ -26,13 +26,9 @@ const Cross = styled.button`
   margin: 24px;
 `;
 
-export const NavBar = ({
-  moveTo,
-}: {
-  moveTo: (newCamera: CameraPosition) => void;
-}) => (
+export const NavBar = ({ moveTo }: { moveTo: (page: Page) => void }) => (
   <>
-    <Cross onClick={() => moveTo(cameraPositions.initial)}>
+    <Cross onClick={() => moveTo(pages.initial)}>
       <svg
         aria-label="Close"
         fill="black"
@@ -58,10 +54,8 @@ export const NavBar = ({
       </svg>
     </Cross>
     <Footer>
-      <button onClick={() => moveTo(cameraPositions.nextParty)}>
-        Next party
-      </button>
-      <button onClick={() => moveTo(cameraPositions.socials)}>Socials</button>
+      <button onClick={() => moveTo(pages.nextParty)}>Next party</button>
+      <button onClick={() => moveTo(pages.socials)}>Socials</button>
     </Footer>
   </>
 );

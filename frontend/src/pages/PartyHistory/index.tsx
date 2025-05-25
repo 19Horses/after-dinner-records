@@ -1,25 +1,30 @@
 import { Html } from '@react-three/drei';
 import { useState } from 'react';
-import { cameraPositions } from '../cameraPositions';
+import { pages } from '../pages';
 import { Party } from './Party';
 import { parties, PartyType } from './parties';
 import { Container } from './styles';
 
 export const PartyHistory = () => {
-  const [openProject, setOpenProject] = useState<PartyType | null>(null);
+  const sortedParties = parties.sort(
+    (a, b) => +new Date(a.date) - +new Date(b.date)
+  );
+  const [openParty, setOpenParty] = useState<PartyType | null>(
+    sortedParties[sortedParties.length - 1]
+  );
 
-  const onProjectOpen = (p: PartyType | null) => {
-    setOpenProject(p);
+  const onPartyOpen = (p: PartyType | null) => {
+    setOpenParty(p);
   };
   return (
-    <Html fullscreen position={cameraPositions.partyHistory.lookAt}>
+    <Html fullscreen position={pages.partyHistory.camera.lookAt}>
       <Container>
-        {parties.map((project, i) => (
+        {sortedParties.map((project, i) => (
           <Party
             key={i}
-            project={project}
-            openProject={openProject}
-            onOpen={onProjectOpen}
+            party={project}
+            openParty={openParty}
+            onOpen={onPartyOpen}
           />
         ))}
       </Container>

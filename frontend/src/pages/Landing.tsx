@@ -6,19 +6,19 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { NavBar } from '../components/Footer';
 import { NextPartyPoster } from '../components/NextPartyPoster';
 import { Socials } from '../components/Socials';
-import { CameraPosition, cameraPositions } from './cameraPositions';
+import { Page, pages } from './pages';
 import { PartyHistory } from './PartyHistory';
 
 export const Landing = () => {
   const gltf = useLoader(GLTFLoader, './backyard.glb');
-  const [cameraPosition, setCameraPosition] = useState(cameraPositions.initial);
+  const [page, setPage] = useState(pages.initial);
   const [isAtStart, setIsAtStart] = useState(true);
   const lookAtRef = useRef(new Vector3(0, 0, 0));
 
   const CameraController = () => {
     useFrame(({ camera }, delta) => {
-      const targetLookAt = cameraPosition.lookAt;
-      const targetPosition = cameraPosition.position;
+      const targetLookAt = page.camera.lookAt;
+      const targetPosition = page.camera.position;
 
       lookAtRef.current.lerp(targetLookAt, delta * 3);
       camera.lookAt(lookAtRef.current);
@@ -28,9 +28,9 @@ export const Landing = () => {
     return null;
   };
 
-  const moveTo = useCallback((newCamera: CameraPosition) => {
+  const moveToPage = useCallback((page: Page) => {
     if (isAtStart) setIsAtStart(false);
-    setCameraPosition(newCamera);
+    setPage(page);
   }, []);
 
   return (
@@ -45,11 +45,11 @@ export const Landing = () => {
           enableRotate={isAtStart}
         />
         <primitive position={[0, 0, 0]} object={gltf.scene} />
-        <NextPartyPoster moveTo={moveTo} />
+        <NextPartyPoster moveTo={moveToPage} />
         <Socials />
-        <PartyHistory />
+        {page.id === 'partyHistory' && <PartyHistory />}
       </Canvas>
-      <NavBar moveTo={moveTo} />
+      <NavBar moveTo={moveToPage} />
     </>
   );
 };
