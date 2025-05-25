@@ -1,14 +1,35 @@
 import { Canvas } from '@react-three/fiber';
 import { styled, css, keyframes } from 'styled-components';
 
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+`;
+
+const spin = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`;
+
 export const Container = styled.div`
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   display: flex;
   position: relative;
 `;
 
-export const Drawer = styled.div<{ $isOpen: boolean }>`
+export const Drawer = styled.div<{ $isOpen: boolean; $delay: number }>`
   height: 100%;
   flex: ${(props) => (props.$isOpen ? 5 : 1)};
   box-sizing: border-box;
@@ -18,7 +39,11 @@ export const Drawer = styled.div<{ $isOpen: boolean }>`
   position: relative;
   border: 1px solid black;
   transition: all 0.3s ease-in-out;
+  opacity: 0;
   cursor: pointer;
+
+  animation: ${fadeIn} 0.5s ease-in-out forwards;
+  animation-delay: ${(props) => props.$delay ?? 0}s;
 
   &:hover,
   &:focus {
@@ -42,27 +67,6 @@ export const Content = styled.div`
   width: 100%;
   height: 100%;
   padding: 24px;
-`;
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0px);
-  }
-`;
-
-const spin = keyframes`
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
 `;
 
 export const PartyImage = styled.img`

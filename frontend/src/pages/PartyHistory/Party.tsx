@@ -12,10 +12,12 @@ import {
 } from './styles';
 
 export const Party = ({
+  index,
   party,
   onOpen,
   openParty,
 }: {
+  index: number;
   party: PartyType;
   onOpen: (p: PartyType | null) => void;
   openParty: PartyType | null;
@@ -38,6 +40,7 @@ export const Party = ({
 
   return (
     <Drawer
+      $delay={index * 0.1}
       $isOpen={isOpen}
       onClick={() => {
         onOpen(isOpen ? null : party);
