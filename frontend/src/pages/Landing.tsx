@@ -1,7 +1,7 @@
 import { Html, OrbitControls } from '@react-three/drei';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { useCallback, useRef, useState } from 'react';
-import { Vector3 } from 'three';
+import { Euler, Quaternion, Vector3 } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { NavBar } from '../components/footer';
 import { NextPartyPoster } from '../components/NextPartyPoster';
@@ -40,10 +40,11 @@ export const Landing = () => {
 
       lookAtRef.current.lerp(targetLookAt, delta * 3);
       camera.lookAt(lookAtRef.current);
-
       camera.position.lerp(targetPosition, delta * 3);
+
       const positionDone = camera.position.distanceTo(targetPosition) < EPSILON;
       const lookAtDone = lookAtRef.current.distanceTo(targetLookAt) < EPSILON;
+
       if (positionDone && lookAtDone && !doneTransitioning) {
         setDoneTransitioning(true);
       }
