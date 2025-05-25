@@ -12,7 +12,11 @@ export const cameraPositions = {
   },
   nextParty: {
     lookAt: new Vector3(-3.6, 0, 8.5),
-    position: new Vector3(-2, 0, 6.5),
+    position: new Vector3(-1.4, 0, 7.5),
+  },
+  partyHistory: {
+    lookAt: new Vector3(-3, 10, 6),
+    position: new Vector3(-2, 10, 4),
   },
   socials: {
     lookAt: new Vector3(-1, 0, 10.5),

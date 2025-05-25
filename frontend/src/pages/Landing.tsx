@@ -1,12 +1,13 @@
 import { OrbitControls } from '@react-three/drei';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { useCallback, useRef, useState } from 'react';
+import { Vector3 } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { NavBar } from '../components/Footer';
 import { NextPartyPoster } from '../components/NextPartyPoster';
-import { CameraPosition, cameraPositions } from './cameraPositions';
 import { Socials } from '../components/Socials';
-import { Vector3 } from 'three';
+import { CameraPosition, cameraPositions } from './cameraPositions';
+import { PartyHistory } from './PartyHistory';
 
 export const Landing = () => {
   const gltf = useLoader(GLTFLoader, './backyard.glb');
@@ -44,8 +45,9 @@ export const Landing = () => {
           enableRotate={isAtStart}
         />
         <primitive position={[0, 0, 0]} object={gltf.scene} />
-        <NextPartyPoster />
+        <NextPartyPoster moveTo={moveTo} />
         <Socials />
+        <PartyHistory />
       </Canvas>
       <NavBar moveTo={moveTo} />
     </>
