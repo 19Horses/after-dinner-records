@@ -7,6 +7,11 @@
   src: url('assets/erika.ttf');
 }
 
+@font-face {
+  font-family: 'Bootzy';
+  src: url('assets/bootzy.ttf');
+}
+
 body {
   font-family: 'Erika';
   margin: 0;
@@ -15,4 +20,11 @@ body {
 
 button {
   font-family: 'Erika';
+}
+
+.react-p5-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }

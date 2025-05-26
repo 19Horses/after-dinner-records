@@ -41,6 +41,7 @@ export const Drawer = styled.div<{ $isOpen: boolean; $delay: number }>`
   transition: all 0.3s ease-in-out;
   opacity: 0;
   cursor: pointer;
+  background-color: white;
 
   animation: ${fadeIn} 0.5s ease-in-out forwards;
   animation-delay: ${(props) => props.$delay ?? 0}s;

@@ -19,9 +19,10 @@ const TitleWrapper = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 24px;
+  font-size: 32px;
   margin: 0;
   margin-top: 36px;
+  font-family: 'Bootzy';
 `;
 
 const EPSILON = 1;
@@ -29,7 +30,6 @@ const EPSILON = 1;
 export const Landing = () => {
   const gltf = useLoader(GLTFLoader, './backyard.glb');
   const [page, setPage] = useState(pages.initial);
-  const [isAtStart, setIsAtStart] = useState(true);
   const start = new Vector3(0, 0, 0);
   const lookAtRef = useRef(start);
   const [doneTransitioning, setDoneTransitioning] = useState(false);
@@ -56,20 +56,19 @@ export const Landing = () => {
 
   const moveToPage = useCallback((page: Page) => {
     setDoneTransitioning(false);
-    if (isAtStart) setIsAtStart(false);
     setPage(page);
   }, []);
 
   return (
     <>
-      <Canvas camera={{ position: [0, 70, 0] }}>
+      <Canvas camera={{ position: [20, 50, 0] }}>
         <CameraController />
         <ambientLight />
         <directionalLight position={[10, 10, 10]} />
         <OrbitControls
           enableZoom={false}
-          enablePan={isAtStart}
-          enableRotate={isAtStart}
+          enablePan={false}
+          enableRotate={false}
         />
         <primitive position={[0, 0, 0]} object={gltf.scene} />
         {page.id === 'initial' && (
