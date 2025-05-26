@@ -1,7 +1,6 @@
-import { Html, OrbitControls } from '@react-three/drei';
+import { OrbitControls } from '@react-three/drei';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { useCallback, useRef, useState } from 'react';
-import { styled } from 'styled-components';
 import { Vector3 } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { NavBar } from '../components/footer';
@@ -9,20 +8,6 @@ import { NextPartyPoster } from '../components/NextPartyPoster';
 import { Socials } from '../components/Socials';
 import { Page, pages } from './pages';
 import { PartyHistory } from './PartyHistory';
-
-const TitleWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  padding: 30px;
-`;
-
-const Title = styled.h1`
-  font-size: 32px;
-  margin: 0;
-  margin-top: 36px;
-`;
 
 const EPSILON = 1;
 
@@ -64,19 +49,8 @@ export const Landing = () => {
         <CameraController />
         <ambientLight />
         <directionalLight position={[10, 10, 10]} />
-        <OrbitControls
-          enableZoom={false}
-          enablePan={false}
-          enableRotate={false}
-        />
+        <OrbitControls enableZoom={false} enablePan enableRotate />
         <primitive position={[0, 0, 0]} object={gltf.scene} />
-        {page.id === 'initial' && (
-          <Html zIndexRange={[0, 0]} fullscreen>
-            <TitleWrapper>
-              <Title>AFTER DINNER RECORDS</Title>
-            </TitleWrapper>
-          </Html>
-        )}
         <NextPartyPoster moveTo={moveToPage} />
         <Socials />
         {page.id === 'partyHistory' && (
