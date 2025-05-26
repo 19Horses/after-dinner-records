@@ -22,7 +22,6 @@ const Title = styled.h1`
   font-size: 32px;
   margin: 0;
   margin-top: 36px;
-  font-family: 'Bootzy';
 `;
 
 const EPSILON = 1;
