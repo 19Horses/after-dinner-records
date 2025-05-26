@@ -22,7 +22,7 @@ const App = () => {
       <Wrapper>
         <Landing />
         <Home />
-        <ReactP5Wrapper sketch={sketch} />
+        {/* <ReactP5Wrapper sketch={sketch} /> */}
       </Wrapper>
     </ApolloProvider>
   );

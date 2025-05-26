@@ -64,11 +64,7 @@ export const Landing = () => {
         <CameraController />
         <ambientLight />
         <directionalLight position={[10, 10, 10]} />
-        <OrbitControls
-          enableZoom={false}
-          enablePan={false}
-          enableRotate={false}
-        />
+        <OrbitControls enableZoom={false} />
         <primitive position={[0, 0, 0]} object={gltf.scene} />
         {page.id === 'initial' && (
           <Html zIndexRange={[0, 0]} fullscreen>
