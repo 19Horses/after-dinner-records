@@ -14,8 +14,8 @@ export const pages: { [key: string]: Page } = {
   initial: {
     id: 'initial',
     camera: {
-      lookAt: new Vector3(0, 0, 0),
-      position: new Vector3(0, 18, 0),
+      lookAt: new Vector3(0, 0, 5),
+      position: new Vector3(8, 12, 5),
     },
   },
   nextParty: {

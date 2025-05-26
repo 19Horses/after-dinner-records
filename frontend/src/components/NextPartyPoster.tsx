@@ -40,7 +40,7 @@ export const NextPartyPoster = ({
       onPointerLeave={() => setHovered(false)}
       onClick={handleClick}
     >
-      <planeGeometry args={[1.3, 1.3]} />
+      <planeGeometry args={[1, 1]} />
       <meshBasicMaterial map={texture} side={THREE.DoubleSide} />
     </mesh>
   );
