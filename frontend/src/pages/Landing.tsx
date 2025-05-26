@@ -1,14 +1,14 @@
 import { Html, OrbitControls } from '@react-three/drei';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { useCallback, useRef, useState } from 'react';
-import { Euler, Quaternion, Vector3 } from 'three';
+import { styled } from 'styled-components';
+import { Vector3 } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { NavBar } from '../components/footer';
 import { NextPartyPoster } from '../components/NextPartyPoster';
 import { Socials } from '../components/Socials';
 import { Page, pages } from './pages';
 import { PartyHistory } from './PartyHistory';
-import { styled } from 'styled-components';
 
 const TitleWrapper = styled.div`
   width: 100%;
