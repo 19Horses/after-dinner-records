@@ -1,9 +1,7 @@
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { styled } from 'styled-components';
-import { Landing } from './pages/Landing';
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import Home from './pages/Home';
-import { ReactP5Wrapper } from '@p5-wrapper/react';
-import { sketch } from './sketch';
+import { Landing } from './pages/Landing';
 
 const client = new ApolloClient({
   uri: 'http://localhost:1337/graphql/',
