@@ -7,7 +7,6 @@ import {
   Lineup,
   TicketLink,
 } from '../PartyHistory/styles';
-import { Archive } from '../../components/nav/Archive';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -37,7 +36,6 @@ export const PartyDetails = () => {
           <Description>{party.description}</Description>
           {party.ticketLink && (
             <TicketLink
-              onClick={(e) => e.stopPropagation()}
               href={party.ticketLink}
               target="_blank"
               rel="noreferrer"

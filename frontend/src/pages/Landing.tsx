@@ -1,6 +1,6 @@
 import { OrbitControls } from '@react-three/drei';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { Vector3 } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { NavBar } from '../components/nav';
@@ -43,18 +43,24 @@ export const Landing = () => {
     return null;
   };
 
-  const moveToPage = (page: Page) => {
-    setDoneTransitioning(false);
-    setPage(page);
-    setPageStack((prev) => [...prev, page]);
-  };
+  const moveToPage = useCallback(
+    (page: Page) => {
+      console.log(page);
+      setDoneTransitioning(false);
+      setPage(page);
+      setPageStack((prev) => [...prev, page]);
+    },
+    [pageStack, page]
+  );
 
-  const goBack = () => {
+  const goBack = useCallback(() => {
     const copiedStack = [...pageStack];
     copiedStack.pop();
     setPage(copiedStack[copiedStack.length - 1] || pages.initial);
     setPageStack(copiedStack);
-  };
+  }, [pageStack]);
+
+  console.log(page);
 
   return (
     <>

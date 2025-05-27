@@ -58,7 +58,6 @@ export const NextPartyPoster = ({
           mesh.position.copy(targetPosition);
           setMovingToTarget(false);
           setIsAtTarget(true);
-          moveTo(pages.partyDetails);
         }
       }
 
