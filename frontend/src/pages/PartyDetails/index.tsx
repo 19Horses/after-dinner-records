@@ -7,6 +7,7 @@ import {
   Lineup,
   TicketLink,
 } from '../PartyHistory/styles';
+import { Archive } from '../../components/nav/Archive';
 
 const Wrapper = styled.div`
   width: 100%;

@@ -36,8 +36,26 @@ export const BackButton = styled.button`
   outline: none;
   font-size: 16px;
   position: fixed;
-  right: left;
   top: 0;
+  left: 0;
+  margin: 24px;
+  z-index: 11;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+export const ArchiveButton = styled.button`
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0%);
   margin: 24px;
   z-index: 11;
 

@@ -3,14 +3,15 @@ import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { useRef, useState } from 'react';
 import { Vector3 } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { NavBar } from '../components/footer';
-import { Back } from '../components/footer/Back';
-import { CloseToHome } from '../components/footer/Close';
+import { NavBar } from '../components/nav';
+import { Back } from '../components/nav/Back';
+import { CloseToHome } from '../components/nav/Close';
 import { NextPartyPoster } from '../components/NextPartyPoster';
 import { Socials } from '../components/Socials';
 import { Page, pages } from './pages';
 import { PartyDetails } from './PartyDetails';
 import { PartyHistory } from './PartyHistory';
+import { Archive } from '../components/nav/Archive';
 
 const EPSILON = 1;
 
@@ -73,6 +74,7 @@ export const Landing = () => {
       <NavBar moveTo={moveToPage} />
       {page.id !== 'initial' && <CloseToHome moveTo={moveToPage} />}
       {page.id !== 'initial' && <Back goBack={goBack} />}
+      {page.id === 'partyDetails' && <Archive moveTo={moveToPage} />}
     </>
   );
 };

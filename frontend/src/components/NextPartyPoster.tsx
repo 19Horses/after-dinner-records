@@ -18,7 +18,7 @@ export const NextPartyPoster = ({
     new THREE.Vector3(
       pages.partyDetails.camera.lookAt.x + 1,
       pages.partyDetails.camera.lookAt.y,
-      pages.partyDetails.camera.lookAt.z - 1
+      pages.partyDetails.camera.lookAt.z + 0.5
     )
   );
   const [isAtTarget, setIsAtTarget] = useState(false);
@@ -31,6 +31,8 @@ export const NextPartyPoster = ({
     if (currentPage.id !== 'partyDetails' && isAtTarget) {
       setMoving(true);
       setIsAtTarget(false);
+    } else if (currentPage.id === 'partyDetails' && !isAtTarget) {
+      setMovingToTarget(true);
     }
   }, [currentPage]);
 
@@ -56,6 +58,7 @@ export const NextPartyPoster = ({
           mesh.position.copy(targetPosition);
           setMovingToTarget(false);
           setIsAtTarget(true);
+          moveTo(pages.partyDetails);
         }
       }
 
