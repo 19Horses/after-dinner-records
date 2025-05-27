@@ -1,26 +1,6 @@
 import { Canvas } from '@react-three/fiber';
-import { styled, css, keyframes } from 'styled-components';
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0px);
-  }
-`;
-
-const spin = keyframes`
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-`;
+import { css, styled } from 'styled-components';
+import { fadeIn } from '../../animations';
 
 export const Container = styled.div`
   height: 100vh;
@@ -68,13 +48,6 @@ export const Content = styled.div`
   width: 100%;
   height: 100%;
   padding: 24px;
-`;
-
-export const PartyImage = styled.img`
-  width: 40%;
-  object-fit: contain;
-  animation: ${fadeIn} 0.5s ease-in-out forwards, ${spin} 2s linear infinite;
-  transform-origin: center;
 `;
 
 export const Description = styled.p`
