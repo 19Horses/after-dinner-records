@@ -15,7 +15,7 @@ import { Archive } from '../components/nav/Archive';
 
 const EPSILON = 1;
 
-export const Landing = () => {
+export const Landing = ({ isAtSplash }: { isAtSplash: boolean }) => {
   const gltf = useLoader(GLTFLoader, './backyard.glb');
   const [pageStack, setPageStack] = useState([pages.initial]);
   const [page, setPage] = useState(pages.initial);
@@ -25,6 +25,9 @@ export const Landing = () => {
 
   const CameraController = () => {
     useFrame(({ camera }, delta) => {
+      if (doneTransitioning && isAtSplash) {
+        return;
+      }
       const targetLookAt = page.camera.lookAt;
       const targetPosition = page.camera.position;
 
@@ -68,7 +71,13 @@ export const Landing = () => {
         <CameraController />
         <ambientLight />
         <directionalLight position={[10, 10, 10]} />
-        <OrbitControls enableZoom={false} enablePan enableRotate />
+        <OrbitControls
+          autoRotate={isAtSplash}
+          enableZoom={false}
+          enablePan
+          enableRotate
+          autoRotateSpeed={0.6}
+        />
         <primitive position={[0, 0, 0]} object={gltf.scene} />
         <NextPartyPoster moveTo={moveToPage} currentPage={page} />
         <Socials />
@@ -77,7 +86,7 @@ export const Landing = () => {
         )}
         {page.id === 'partyDetails' && <PartyDetails />}
       </Canvas>
-      <NavBar moveTo={moveToPage} />
+      {!isAtSplash && <NavBar moveTo={moveToPage} />}
       {page.id !== 'initial' && <CloseToHome moveTo={moveToPage} />}
       {page.id !== 'initial' && <Back goBack={goBack} />}
       {page.id === 'partyDetails' && <Archive moveTo={moveToPage} />}
