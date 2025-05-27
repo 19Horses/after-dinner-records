@@ -66,7 +66,7 @@ const App = () => {
     setIsFadingOut(true);
     setTimeout(() => {
       setIsAtSplash(false);
-    }, 1000); // Match transition duration (1s)
+    }, 1000);
   };
 
   return (

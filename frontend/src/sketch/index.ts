@@ -13,7 +13,7 @@ export function sketch(p5: p5) {
     p5.createCanvas(innerWidth, innerHeight);
     p5.noStroke();
     p5.imageMode(p5.CENTER);
-    p5.textSize(8);
+    p5.textSize(20);
     p5.textFont(font);
     p5.rectMode(p5.CENTER);
 
@@ -22,13 +22,12 @@ export function sketch(p5: p5) {
         pts.push({ x, y });
       }
     }
+    p5.noCursor();
   };
 
   p5.draw = () => {
-    p5.background(255);
-    pts.forEach(({ x, y }) => {
-      p5.text('+', x, y);
-    });
+    p5.background(255, 0);
+    p5.text('+', p5.mouseX, p5.mouseY);
   };
 
   p5.windowResized = () => {
