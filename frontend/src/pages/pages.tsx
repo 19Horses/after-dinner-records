@@ -14,8 +14,8 @@ export const pages: { [key: string]: Page } = {
   initial: {
     id: 'initial',
     camera: {
-      lookAt: new Vector3(0, 0, 5),
-      position: new Vector3(8, 12, 5),
+      lookAt: new Vector3(0, 0, 0),
+      position: new Vector3(12, 8, 0),
     },
   },
   nextParty: {
@@ -30,6 +30,13 @@ export const pages: { [key: string]: Page } = {
     camera: {
       lookAt: new Vector3(-3, 10, 6),
       position: new Vector3(-2, 10, 4),
+    },
+  },
+  partyDetails: {
+    id: 'partyDetails',
+    camera: {
+      lookAt: new Vector3(3, 10, 5),
+      position: new Vector3(3, 10, 3.4),
     },
   },
   socials: {

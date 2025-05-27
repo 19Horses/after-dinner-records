@@ -10,7 +10,6 @@ export const PartyHistory = ({
 }: {
   doneTransitioning: boolean;
 }) => {
-  console.log(doneTransitioning);
   const sortedParties = parties.sort(
     (a, b) => +new Date(a.date) - +new Date(b.date)
   );
@@ -30,7 +29,7 @@ export const PartyHistory = ({
     <Html
       fullscreen
       position={pages.partyHistory.camera.lookAt}
-      zIndexRange={[0, 0]}
+      zIndexRange={[10, 10]}
     >
       <Container>
         {sortedParties.map((project, i) => (

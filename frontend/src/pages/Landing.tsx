@@ -1,33 +1,23 @@
-import { Html, OrbitControls } from '@react-three/drei';
+import { OrbitControls } from '@react-three/drei';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { useCallback, useRef, useState } from 'react';
-import { styled } from 'styled-components';
 import { Vector3 } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { NavBar } from '../components/footer';
+import { NavBar } from '../components/nav';
+import { Back } from '../components/nav/Back';
+import { CloseToHome } from '../components/nav/Close';
 import { NextPartyPoster } from '../components/NextPartyPoster';
 import { Socials } from '../components/Socials';
 import { Page, pages } from './pages';
+import { PartyDetails } from './PartyDetails';
 import { PartyHistory } from './PartyHistory';
-
-const TitleWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  padding: 30px;
-`;
-
-const Title = styled.h1`
-  font-size: 32px;
-  margin: 0;
-  margin-top: 36px;
-`;
+import { Archive } from '../components/nav/Archive';
 
 const EPSILON = 1;
 
 export const Landing = () => {
   const gltf = useLoader(GLTFLoader, './backyard.glb');
+  const [pageStack, setPageStack] = useState([pages.initial]);
   const [page, setPage] = useState(pages.initial);
   const start = new Vector3(0, 0, 0);
   const lookAtRef = useRef(start);
@@ -53,10 +43,24 @@ export const Landing = () => {
     return null;
   };
 
-  const moveToPage = useCallback((page: Page) => {
-    setDoneTransitioning(false);
-    setPage(page);
-  }, []);
+  const moveToPage = useCallback(
+    (page: Page) => {
+      console.log(page);
+      setDoneTransitioning(false);
+      setPage(page);
+      setPageStack((prev) => [...prev, page]);
+    },
+    [pageStack, page]
+  );
+
+  const goBack = useCallback(() => {
+    const copiedStack = [...pageStack];
+    copiedStack.pop();
+    setPage(copiedStack[copiedStack.length - 1] || pages.initial);
+    setPageStack(copiedStack);
+  }, [pageStack]);
+
+  console.log(page);
 
   return (
     <>
@@ -64,26 +68,19 @@ export const Landing = () => {
         <CameraController />
         <ambientLight />
         <directionalLight position={[10, 10, 10]} />
-        <OrbitControls
-          enableZoom={false}
-          enablePan={false}
-          enableRotate={false}
-        />
+        <OrbitControls enableZoom={false} enablePan enableRotate />
         <primitive position={[0, 0, 0]} object={gltf.scene} />
-        {page.id === 'initial' && (
-          <Html zIndexRange={[0, 0]} fullscreen>
-            <TitleWrapper>
-              <Title>AFTER DINNER RECORDS</Title>
-            </TitleWrapper>
-          </Html>
-        )}
-        <NextPartyPoster moveTo={moveToPage} />
+        <NextPartyPoster moveTo={moveToPage} currentPage={page} />
         <Socials />
         {page.id === 'partyHistory' && (
           <PartyHistory doneTransitioning={doneTransitioning} />
         )}
+        {page.id === 'partyDetails' && <PartyDetails />}
       </Canvas>
-      <NavBar moveTo={moveToPage} currentPage={page} />
+      <NavBar moveTo={moveToPage} />
+      {page.id !== 'initial' && <CloseToHome moveTo={moveToPage} />}
+      {page.id !== 'initial' && <Back goBack={goBack} />}
+      {page.id === 'partyDetails' && <Archive moveTo={moveToPage} />}
     </>
   );
 };
