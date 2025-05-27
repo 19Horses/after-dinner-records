@@ -29,6 +29,23 @@ export const Close = styled.button`
   }
 `;
 
+export const BackButton = styled.button`
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  position: fixed;
+  right: left;
+  top: 0;
+  margin: 24px;
+  z-index: 11;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 export const NavButton = styled.button`
   cursor: pointer;
   background-color: transparent;

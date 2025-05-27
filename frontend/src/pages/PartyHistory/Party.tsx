@@ -4,7 +4,7 @@ import { PartyType } from './parties';
 import {
   CanvasForPartyPoster,
   Content,
-  Date,
+  DateText,
   Description,
   Drawer,
   Lineup,
@@ -56,13 +56,13 @@ export const Party = ({
         return setIsOpen(nextOpenState);
       }}
     >
-      {!showContent && <Date $vertical={true}>{party.date}</Date>}
+      {!showContent && <DateText $vertical={true}>{party.date}</DateText>}
       {showContent && (
         <Content>
           <CanvasForPartyPoster onClick={(e) => e.stopPropagation()}>
             <Poster />
           </CanvasForPartyPoster>
-          <Date>{party.date}</Date>
+          <DateText>{party.date}</DateText>
           <Lineup>{party.lineup}</Lineup>
           <Description>{party.description}</Description>
           {party.ticketLink && (

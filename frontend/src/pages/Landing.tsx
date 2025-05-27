@@ -1,18 +1,22 @@
 import { OrbitControls } from '@react-three/drei';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
-import { useCallback, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Vector3 } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { NavBar } from '../components/footer';
+import { Back } from '../components/footer/Back';
+import { CloseToHome } from '../components/footer/Close';
 import { NextPartyPoster } from '../components/NextPartyPoster';
 import { Socials } from '../components/Socials';
 import { Page, pages } from './pages';
+import { PartyDetails } from './PartyDetails';
 import { PartyHistory } from './PartyHistory';
 
 const EPSILON = 1;
 
 export const Landing = () => {
   const gltf = useLoader(GLTFLoader, './backyard.glb');
+  const [pageStack, setPageStack] = useState([pages.initial]);
   const [page, setPage] = useState(pages.initial);
   const start = new Vector3(0, 0, 0);
   const lookAtRef = useRef(start);
@@ -38,10 +42,18 @@ export const Landing = () => {
     return null;
   };
 
-  const moveToPage = useCallback((page: Page) => {
+  const moveToPage = (page: Page) => {
     setDoneTransitioning(false);
     setPage(page);
-  }, []);
+    setPageStack((prev) => [...prev, page]);
+  };
+
+  const goBack = () => {
+    const copiedStack = [...pageStack];
+    copiedStack.pop();
+    setPage(copiedStack[copiedStack.length - 1] || pages.initial);
+    setPageStack(copiedStack);
+  };
 
   return (
     <>
@@ -51,13 +63,16 @@ export const Landing = () => {
         <directionalLight position={[10, 10, 10]} />
         <OrbitControls enableZoom={false} enablePan enableRotate />
         <primitive position={[0, 0, 0]} object={gltf.scene} />
-        <NextPartyPoster moveTo={moveToPage} />
+        <NextPartyPoster moveTo={moveToPage} currentPage={page} />
         <Socials />
         {page.id === 'partyHistory' && (
           <PartyHistory doneTransitioning={doneTransitioning} />
         )}
+        {page.id === 'partyDetails' && <PartyDetails />}
       </Canvas>
-      <NavBar moveTo={moveToPage} currentPage={page} />
+      <NavBar moveTo={moveToPage} />
+      {page.id !== 'initial' && <CloseToHome moveTo={moveToPage} />}
+      {page.id !== 'initial' && <Back goBack={goBack} />}
     </>
   );
 };

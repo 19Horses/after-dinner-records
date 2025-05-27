@@ -10,7 +10,6 @@ export const PartyHistory = ({
 }: {
   doneTransitioning: boolean;
 }) => {
-  console.log(doneTransitioning);
   const sortedParties = parties.sort(
     (a, b) => +new Date(a.date) - +new Date(b.date)
   );

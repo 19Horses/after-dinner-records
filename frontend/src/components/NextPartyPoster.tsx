@@ -5,31 +5,78 @@ import nextPartyImg from '../assets/next-party.png';
 import { Page, pages } from '../pages/pages';
 
 export const NextPartyPoster = ({
+  currentPage,
   moveTo,
 }: {
+  currentPage: Page;
   moveTo: (newCamera: Page) => void;
 }) => {
   const [hovered, setHovered] = useState(false);
+  const [movingToTarget, setMovingToTarget] = useState(false);
+  const [moving, setMoving] = useState(false);
+  const [targetPosition] = useState(
+    new THREE.Vector3(
+      pages.partyDetails.camera.lookAt.x + 1,
+      pages.partyDetails.camera.lookAt.y,
+      pages.partyDetails.camera.lookAt.z - 1
+    )
+  );
+  const [isAtTarget, setIsAtTarget] = useState(false);
+
+  const meshPosition = useRef<THREE.Vector3>(
+    new THREE.Vector3(...pages.nextParty.camera.lookAt)
+  );
+
+  useEffect(() => {
+    if (currentPage.id !== 'partyDetails' && isAtTarget) {
+      setMoving(true);
+      setIsAtTarget(false);
+    }
+  }, [currentPage]);
+
+  const meshRef =
+    useRef<THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial>>(null);
 
   useEffect(() => {
     document.body.style.cursor = hovered ? 'pointer' : 'auto';
   }, [hovered]);
 
   const texture = useLoader(THREE.TextureLoader, nextPartyImg);
-  const meshRef =
-    useRef<THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial>>(null);
-  const meshPosition = useRef<THREE.Vector3>(
-    new THREE.Vector3(...pages.nextParty.camera.lookAt)
-  );
 
   useFrame((_, delta) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y += delta * 0.5;
+    const mesh = meshRef.current;
+    if (mesh) {
+      mesh.rotation.y += delta * 0.5;
+
+      if (movingToTarget) {
+        const current = mesh.position;
+        current.lerp(targetPosition, delta * 3);
+
+        if (current.distanceTo(targetPosition) < 0.01) {
+          mesh.position.copy(targetPosition);
+          setMovingToTarget(false);
+          setIsAtTarget(true);
+        }
+      }
+
+      if (moving) {
+        const current = mesh.position;
+        const initialPos = meshPosition.current;
+        current.lerp(initialPos, delta * 3);
+
+        if (current.distanceTo(initialPos) < 0.01) {
+          mesh.position.copy(initialPos);
+          setMoving(false);
+        }
+      }
     }
   });
 
   const handleClick = () => {
-    moveTo(pages.partyHistory);
+    if (!moving && meshRef.current) {
+      setMovingToTarget(true);
+    }
+    moveTo(pages.partyDetails);
   };
 
   return (

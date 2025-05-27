@@ -32,6 +32,13 @@ export const pages: { [key: string]: Page } = {
       position: new Vector3(-2, 10, 4),
     },
   },
+  partyDetails: {
+    id: 'partyDetails',
+    camera: {
+      lookAt: new Vector3(3, 10, 5),
+      position: new Vector3(3, 10, 3.4),
+    },
+  },
   socials: {
     id: 'socials',
     camera: {
