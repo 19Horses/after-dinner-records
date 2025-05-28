@@ -16,7 +16,7 @@ export const pages: { [key: string]: Page } = {
     id: 'splash',
     camera: {
       lookAt: new Vector3(0, 0, 0),
-      position: isMobile ? new Vector3(30, 18, 0) : new Vector3(20, 15, 0),
+      position: isMobile ? new Vector3(30, 18, 0) : new Vector3(15, 15, 0),
     },
   },
   initial: {

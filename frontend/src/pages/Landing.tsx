@@ -1,8 +1,8 @@
 import { OrbitControls } from '@react-three/drei';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { styled } from 'styled-components';
-import { Vector3 } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { appear } from '../animations';
 import { NavBar } from '../components/nav';
@@ -14,7 +14,6 @@ import { Socials } from '../components/Socials';
 import { Page, pages } from './pages';
 import { PartyDetails } from './PartyDetails';
 import { PartyHistory } from './PartyHistory';
-import { isMobile } from 'react-device-detect';
 
 const VerticalTitle = styled.h1`
   position: absolute;
@@ -50,15 +49,12 @@ export const Landing = ({ isAtSplash }: { isAtSplash: boolean }) => {
   const gltf = useLoader(GLTFLoader, './backyard.glb');
   const [pageStack, setPageStack] = useState([pages.initial]);
   const [page, setPage] = useState(pages.splash);
-  const start = new Vector3(0, 0, 0);
-  const lookAtRef = useRef(start);
+  const lookAtRef = useRef(pages.splash.camera.lookAt);
   const [doneTransitioning, setDoneTransitioning] = useState(false);
 
   useEffect(() => {
     if (!isAtSplash) {
       setPage(pages.initial);
-    } else {
-      setPage(pages.splash);
     }
   }, [isAtSplash]);
 

@@ -1,52 +1,44 @@
 import { Html } from '@react-three/drei';
-import { useState } from 'react';
+import { PartyType, useGetParties } from '../../queries/useGetParties';
 import { pages } from '../pages';
-import { Party } from './Party';
-import { parties, PartyType } from './parties';
-import { Container } from './styles';
-import { isMobile } from 'react-device-detect';
+import { PartyHistoryContent } from './PartyHistory';
 
 export const PartyHistory = ({
   doneTransitioning,
 }: {
   doneTransitioning: boolean;
 }) => {
-  const sortedParties = parties.sort((a, b) => {
-    if (!isMobile) {
-      return +new Date(a.date) - +new Date(b.date);
-    } else {
-      return +new Date(b.date) - +new Date(a.date);
-    }
-  });
-  const [openParty, setOpenParty] = useState<PartyType | null>(
-    sortedParties[isMobile ? 0 : sortedParties.length - 1]
-  );
+  const { loading, error, data } = useGetParties();
 
-  const onPartyOpen = (p: PartyType | null) => {
-    setOpenParty(p);
-  };
+  if (loading) {
+    return (
+      <Html
+        fullscreen
+        position={pages.partyHistory.camera.lookAt}
+        zIndexRange={[10, 10]}
+      >
+        <p>Loading...</p>
+      </Html>
+    );
+  }
+
+  if (error) {
+    return (
+      <Html
+        fullscreen
+        position={pages.partyHistory.camera.lookAt}
+        zIndexRange={[10, 10]}
+      >
+        <p>Something went wrong!</p>
+      </Html>
+    );
+  }
 
   if (!doneTransitioning) {
     return null;
   }
 
-  return (
-    <Html
-      fullscreen
-      position={pages.partyHistory.camera.lookAt}
-      zIndexRange={[10, 10]}
-    >
-      <Container>
-        {sortedParties.map((project, i) => (
-          <Party
-            key={i}
-            index={i}
-            party={project}
-            openParty={openParty}
-            onOpen={onPartyOpen}
-          />
-        ))}
-      </Container>
-    </Html>
-  );
+  const parties: PartyType[] = data.parties;
+
+  return <PartyHistoryContent parties={parties} />;
 };

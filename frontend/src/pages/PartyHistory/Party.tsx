@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Poster } from '../../components/Poster';
-import { PartyType } from './parties';
+import { PartyType } from '../../queries/useGetParties';
 import {
   CanvasForPartyPoster,
   Content,
@@ -10,7 +11,6 @@ import {
   Lineup,
   TicketLink,
 } from './styles';
-import { isMobile } from 'react-device-detect';
 
 export const Party = ({
   index,
@@ -23,8 +23,12 @@ export const Party = ({
   onOpen: (p: PartyType | null) => void;
   openParty: PartyType | null;
 }) => {
-  const [isOpen, setIsOpen] = useState(openParty?.id === party.id);
-  const [showContent, setShowContent] = useState(openParty?.id === party.id);
+  const [isOpen, setIsOpen] = useState(
+    openParty?.documentId === party.documentId
+  );
+  const [showContent, setShowContent] = useState(
+    openParty?.documentId === party.documentId
+  );
 
   useEffect(() => {
     if (!openParty && isOpen) {
@@ -32,7 +36,7 @@ export const Party = ({
       setIsOpen(false);
     }
     if (openParty) {
-      if (openParty.id !== party.id && isOpen) {
+      if (openParty.documentId !== party.documentId && isOpen) {
         setShowContent(false);
         setIsOpen(false);
       }
@@ -63,7 +67,7 @@ export const Party = ({
       {showContent && (
         <Content>
           <CanvasForPartyPoster onClick={(e) => e.stopPropagation()}>
-            <Poster />
+            <Poster src={party.poster.url} />
           </CanvasForPartyPoster>
           <DateText>{party.date}</DateText>
           <Lineup>{party.lineup}</Lineup>

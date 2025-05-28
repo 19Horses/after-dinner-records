@@ -1,16 +1,16 @@
 import { ThreeEvent, useFrame, useLoader } from '@react-three/fiber';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
-import nextPartyImg from '../assets/next-party.png';
 
-export const Poster = () => {
+export const Poster = ({ src }: { src: string }) => {
   const [hovered, setHovered] = useState(false);
-
   useEffect(() => {
     document.body.style.cursor = hovered ? 'crosshair' : 'auto';
   }, [hovered]);
 
-  const texture = useLoader(THREE.TextureLoader, nextPartyImg);
+  const url = useMemo(() => `${import.meta.env.VITE_STRAPI_URL}${src}`, [src]);
+
+  const texture = useLoader(THREE.TextureLoader, url);
   const meshRef =
     useRef<THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial>>(null);
 
