@@ -4,10 +4,13 @@ import { fadeIn } from '../../animations';
 import { isMobile } from 'react-device-detect';
 
 export const Container = styled.div`
-  height: 100vh;
+  height: 100svh;
   width: 100vw;
+  position: absolute;
+  top: 0;
   display: flex;
   position: relative;
+  overflow-y: scroll;
   flex-direction: ${isMobile ? 'column' : 'row'};
 `;
 

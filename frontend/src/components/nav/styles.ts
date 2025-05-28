@@ -15,6 +15,7 @@ export const Footer = styled.footer`
 
 export const CloseButton = styled.button`
   cursor: pointer;
+  color: black;
   background-color: transparent;
   border: none;
   outline: none;
@@ -25,16 +26,12 @@ export const CloseButton = styled.button`
   margin-right: 24px;
   margin-top: 24px;
   z-index: 11;
-  transition: opacity 0.5s ease-in-out;
   text-decoration: underline;
-
-  &:hover {
-    opacity: 0.7;
-  }
 `;
 
 export const BackButton = styled.button`
   cursor: pointer;
+  color: black;
   background-color: transparent;
   border: none;
   outline: none;
@@ -44,16 +41,12 @@ export const BackButton = styled.button`
   left: 0;
   margin: 24px;
   z-index: 11;
-  transition: opacity 0.5s ease-in-out;
   text-decoration: underline;
-
-  &:hover {
-    opacity: 0.7;
-  }
 `;
 
 export const ArchiveButton = styled.button`
   cursor: pointer;
+  color: black;
   background-color: transparent;
   border: none;
   outline: none;
@@ -64,30 +57,23 @@ export const ArchiveButton = styled.button`
   transform: translate(-50%, 0%);
   margin-top: 24px;
   z-index: 11;
-  transition: opacity 0.5s ease-in-out;
   text-decoration: underline;
-
-  &:hover {
-    opacity: 0.7;
-  }
 `;
 
 export const NavButton = styled.button<{ $color: 'white' | 'black' }>`
   cursor: pointer;
+  color: black;
   background-color: transparent;
   border: none;
   outline: none;
   font-size: 16px;
-  transition: opacity 0.5s ease-in-out;
   text-decoration: underline;
   color: ${({ $color }) => $color};
-
-  &:hover {
-    opacity: 0.7;
-  }
 `;
+
 export const EnterButton = styled.button`
   cursor: pointer;
+  color: black;
   background-color: transparent;
   border: none;
   outline: none;
@@ -101,9 +87,4 @@ export const EnterButton = styled.button`
   z-index: 11;
   animation: ${appear} 1s ease-in-out;
   text-decoration: underline;
-  transition: opacity 1s ease-in-out;
-
-  &:hover {
-    opacity: 0.7;
-  }
 `;
