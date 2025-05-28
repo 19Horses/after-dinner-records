@@ -11,6 +11,13 @@ export type Page = {
 };
 
 export const pages: { [key: string]: Page } = {
+  splash: {
+    id: 'splash',
+    camera: {
+      lookAt: new Vector3(0, 0, 0),
+      position: new Vector3(20, 15, 0),
+    },
+  },
   initial: {
     id: 'initial',
     camera: {

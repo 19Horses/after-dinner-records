@@ -1,9 +1,10 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { useState } from 'react';
 import { styled } from 'styled-components';
-import { appear, fadeIn } from './animations';
+import { fadeIn } from './animations';
 import Home from './pages/Home';
 import { Landing } from './pages/Landing';
+import { Enter } from './components/nav/Enter';
 
 const client = new ApolloClient({
   uri: 'http://localhost:1337/graphql/',
@@ -33,29 +34,10 @@ const Blur = styled.div<{ $isFadingOut: boolean }>`
 const Title = styled.h1`
   font-family: 'Bootzy';
   font-size: 64px;
-  margin-top: 100px;
+  margin-top: 24px;
   animation: ${fadeIn} 1s ease-in-out;
   width: 80%;
   text-align: center;
-`;
-
-const EnterButton = styled.button`
-  cursor: pointer;
-  background-color: transparent;
-  border: none;
-  outline: none;
-  font-size: 16px;
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translate(-50%, 0%);
-  margin: 24px;
-  z-index: 11;
-  animation: ${appear} 1s ease-in-out;
-
-  &:hover {
-    text-decoration: underline;
-  }
 `;
 
 const App = () => {
@@ -78,7 +60,7 @@ const App = () => {
         {isAtSplash && (
           <Blur $isFadingOut={isFadingOut}>
             <Title>AFTER DINNER RECORDS</Title>
-            <EnterButton onClick={handleEnter}>Enter</EnterButton>
+            <Enter handleEnter={handleEnter} />
           </Blur>
         )}
       </Wrapper>
