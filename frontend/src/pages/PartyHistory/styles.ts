@@ -29,9 +29,11 @@ export const Drawer = styled.div<{ $isOpen: boolean; $delay: number }>`
   animation-delay: ${(props) => props.$delay ?? 0}s;
 
   &:hover,
-  &:focus {
+  &:focus,
+  &:active {
     color: black;
     outline: none;
+    background-color: white;
   }
 
   ${(props) =>

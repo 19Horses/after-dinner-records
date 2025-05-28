@@ -125,7 +125,7 @@ export const Landing = ({ isAtSplash }: { isAtSplash: boolean }) => {
       </Canvas>
       {page.id === 'initial' && <VerticalTitle>ADR</VerticalTitle>}
       {page.id === 'initial' && <VerticalLocation>Garden</VerticalLocation>}
-      {!isAtSplash && <NavBar moveTo={moveToPage} />}
+      {!isAtSplash && <NavBar currentPage={page} moveTo={moveToPage} />}
       {page.id !== 'splash' && (
         <>
           {page.id !== 'initial' && <Close moveTo={moveToPage} />}
