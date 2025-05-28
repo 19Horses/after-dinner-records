@@ -9,7 +9,7 @@ const TARGET = isMobile
   ? new THREE.Vector3(
       pages.partyDetails.camera.lookAt.x,
       pages.partyDetails.camera.lookAt.y + 0.5,
-      pages.partyDetails.camera.lookAt.z
+      pages.partyDetails.camera.lookAt.z + 0.5
     )
   : new THREE.Vector3(
       pages.partyDetails.camera.lookAt.x + 1,

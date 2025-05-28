@@ -10,6 +10,7 @@ import {
   Lineup,
   TicketLink,
 } from './styles';
+import { isMobile } from 'react-device-detect';
 
 export const Party = ({
   index,
@@ -56,7 +57,9 @@ export const Party = ({
         return setIsOpen(nextOpenState);
       }}
     >
-      {!showContent && <DateText $vertical={true}>{party.date}</DateText>}
+      {!showContent && (
+        <DateText $vertical={isMobile ? false : true}>{party.date}</DateText>
+      )}
       {showContent && (
         <Content>
           <CanvasForPartyPoster onClick={(e) => e.stopPropagation()}>

@@ -111,8 +111,8 @@ export const Landing = ({ isAtSplash }: { isAtSplash: boolean }) => {
         <OrbitControls
           autoRotate={isAtSplash}
           enableZoom={false}
-          enablePan
-          enableRotate
+          enablePan={page.id !== 'partyHistory'}
+          enableRotate={page.id !== 'partyHistory'}
           autoRotateSpeed={0.6}
         />
         <primitive position={[0, 0, 0]} object={gltf.scene} />
