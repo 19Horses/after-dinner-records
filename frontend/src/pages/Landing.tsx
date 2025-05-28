@@ -113,7 +113,7 @@ export const Landing = ({ isAtSplash }: { isAtSplash: boolean }) => {
           enableZoom={false}
           enablePan={page.id !== 'partyHistory'}
           enableRotate={page.id !== 'partyHistory'}
-          autoRotateSpeed={0.6}
+          autoRotateSpeed={0.9}
         />
         <primitive position={[0, 0, 0]} object={gltf.scene} />
         <NextPartyPoster moveTo={moveToPage} currentPage={page} />
