@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { appear } from '../../animations';
 
 export const Footer = styled.footer`
   position: fixed;
@@ -12,7 +13,7 @@ export const Footer = styled.footer`
   z-index: 9;
 `;
 
-export const Close = styled.button`
+export const CloseButton = styled.button`
   cursor: pointer;
   background-color: transparent;
   border: none;
@@ -21,11 +22,14 @@ export const Close = styled.button`
   position: fixed;
   right: 0;
   top: 0;
-  margin: 24px;
+  margin-right: 24px;
+  margin-top: 24px;
   z-index: 11;
+  transition: opacity 0.5s ease-in-out;
+  text-decoration: underline;
 
   &:hover {
-    text-decoration: underline;
+    opacity: 0.7;
   }
 `;
 
@@ -40,9 +44,11 @@ export const BackButton = styled.button`
   left: 0;
   margin: 24px;
   z-index: 11;
+  transition: opacity 0.5s ease-in-out;
+  text-decoration: underline;
 
   &:hover {
-    text-decoration: underline;
+    opacity: 0.7;
   }
 `;
 
@@ -52,26 +58,52 @@ export const ArchiveButton = styled.button`
   border: none;
   outline: none;
   font-size: 16px;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 50%;
   transform: translate(-50%, 0%);
-  margin: 24px;
+  margin-top: 24px;
   z-index: 11;
+  transition: opacity 0.5s ease-in-out;
+  text-decoration: underline;
 
   &:hover {
-    text-decoration: underline;
+    opacity: 0.7;
   }
 `;
 
-export const NavButton = styled.button`
+export const NavButton = styled.button<{ $color: 'white' | 'black' }>`
   cursor: pointer;
   background-color: transparent;
   border: none;
   outline: none;
   font-size: 16px;
+  transition: opacity 0.5s ease-in-out;
+  text-decoration: underline;
+  color: ${({ $color }) => $color};
 
   &:hover {
-    text-decoration: underline;
+    opacity: 0.7;
+  }
+`;
+export const EnterButton = styled.button`
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%, 0%);
+  margin-bottom: 24px;
+  z-index: 11;
+  animation: ${appear} 1s ease-in-out;
+  text-decoration: underline;
+  transition: opacity 1s ease-in-out;
+
+  &:hover {
+    opacity: 0.7;
   }
 `;

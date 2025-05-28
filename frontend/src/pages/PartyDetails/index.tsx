@@ -7,25 +7,28 @@ import {
   Lineup,
   TicketLink,
 } from '../PartyHistory/styles';
+import { isMobile } from 'react-device-detect';
 
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  flex-direction: ${isMobile ? 'column' : 'row'};
 `;
 
 const Container = styled.div`
-  width: 50%;
-  height: 100%;
+  width: ${isMobile ? '80%' : '50%'};
+  height: ${isMobile ? '45%' : '100%'};
   display: flex;
-  justify-content: center;
+  justify-content: ${isMobile ? 'auto' : 'center'};
   flex-direction: column;
 `;
 
 export const PartyDetails = () => {
   const party = parties.sort(
-    (a, b) => +new Date(a.date) - +new Date(b.date),
+    (a, b) => +new Date(a.date) - +new Date(b.date)
   )[0];
   return (
     <Html fullscreen zIndexRange={[0, 0]}>

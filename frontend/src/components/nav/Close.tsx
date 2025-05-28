@@ -1,6 +1,6 @@
 import { Page, pages } from '../../pages/pages';
-import { Close } from './styles';
+import { CloseButton } from './styles';
 
-export const CloseToHome = ({ moveTo }: { moveTo: (page: Page) => void }) => (
-  <Close onClick={() => moveTo(pages.initial)}>close x</Close>
+export const Close = ({ moveTo }: { moveTo: (page: Page) => void }) => (
+  <CloseButton onClick={() => moveTo(pages.initial)}>close x</CloseButton>
 );
