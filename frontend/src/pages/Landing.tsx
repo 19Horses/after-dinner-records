@@ -87,7 +87,6 @@ export const Landing = ({ isAtSplash }: { isAtSplash: boolean }) => {
 
   const moveToPage = useCallback(
     (page: Page) => {
-      console.log(page);
       setDoneTransitioning(false);
       setPage(page);
       setPageStack((prev) => [...prev, page]);

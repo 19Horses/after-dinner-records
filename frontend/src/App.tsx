@@ -1,10 +1,10 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
-import { useState } from 'react';
+import { useProgress } from '@react-three/drei';
+import { useMemo, useState } from 'react';
 import { styled } from 'styled-components';
 import { fadeIn } from './animations';
-import Home from './pages/Home';
-import { Landing } from './pages/Landing';
 import { Enter } from './components/nav/Enter';
+import { Landing } from './pages/Landing';
 
 const client = new ApolloClient({
   uri: 'http://localhost:1337/graphql/',
@@ -15,6 +15,9 @@ const Wrapper = styled.div`
   width: 100vw;
   height: 100svh;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Blur = styled.div<{ $isFadingOut: boolean }>`
@@ -48,6 +51,10 @@ const Title = styled.h1`
 const App = () => {
   const [isAtSplash, setIsAtSplash] = useState(true);
   const [isFadingOut, setIsFadingOut] = useState(false);
+  const { loaded, total } = useProgress();
+  const isLoading = useMemo(() => {
+    return loaded !== total;
+  }, [loaded, total]);
 
   const handleEnter = () => {
     setIsFadingOut(true);
@@ -56,11 +63,21 @@ const App = () => {
     }, 1000);
   };
 
+  if (isLoading) {
+    return (
+      <ApolloProvider client={client}>
+        <Wrapper>
+          <p>Loading...</p>
+        </Wrapper>
+      </ApolloProvider>
+    );
+  }
+
   return (
     <ApolloProvider client={client}>
       <Wrapper>
         <Landing isAtSplash={isAtSplash} />
-        <Home />
+        {/* <Home /> */}
         {/* <ReactP5Wrapper sketch={sketch} /> */}
         {isAtSplash && (
           <Blur $isFadingOut={isFadingOut}>
