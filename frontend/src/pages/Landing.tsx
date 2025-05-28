@@ -50,15 +50,12 @@ export const Landing = ({ isAtSplash }: { isAtSplash: boolean }) => {
   const gltf = useLoader(GLTFLoader, './backyard.glb');
   const [pageStack, setPageStack] = useState([pages.initial]);
   const [page, setPage] = useState(pages.splash);
-  const start = new Vector3(0, 0, 0);
-  const lookAtRef = useRef(start);
+  const lookAtRef = useRef(pages.splash.camera.lookAt);
   const [doneTransitioning, setDoneTransitioning] = useState(false);
 
   useEffect(() => {
     if (!isAtSplash) {
       setPage(pages.initial);
-    } else {
-      setPage(pages.splash);
     }
   }, [isAtSplash]);
 
