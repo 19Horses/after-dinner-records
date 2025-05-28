@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Poster } from '../../components/Poster';
+import { PartyType } from '../../queries/useGetParties';
 import {
   CanvasForPartyPoster,
   Content,
@@ -9,8 +11,6 @@ import {
   Lineup,
   TicketLink,
 } from './styles';
-import { isMobile } from 'react-device-detect';
-import { PartyType } from '../../queries/useGetParties';
 
 export const Party = ({
   index,
@@ -67,7 +67,7 @@ export const Party = ({
       {showContent && (
         <Content>
           <CanvasForPartyPoster onClick={(e) => e.stopPropagation()}>
-            <Poster />
+            <Poster src={party.poster.url} />
           </CanvasForPartyPoster>
           <DateText>{party.date}</DateText>
           <Lineup>{party.lineup}</Lineup>
