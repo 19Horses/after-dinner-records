@@ -1,8 +1,8 @@
 import { OrbitControls } from '@react-three/drei';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { styled } from 'styled-components';
-import { Vector3 } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { appear } from '../animations';
 import { NavBar } from '../components/nav';
@@ -14,7 +14,6 @@ import { Socials } from '../components/Socials';
 import { Page, pages } from './pages';
 import { PartyDetails } from './PartyDetails';
 import { PartyHistory } from './PartyHistory';
-import { isMobile } from 'react-device-detect';
 
 const VerticalTitle = styled.h1`
   position: absolute;
