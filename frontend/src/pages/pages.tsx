@@ -1,3 +1,4 @@
+import { isMobile } from 'react-device-detect';
 import { Vector3 } from 'three';
 
 export type CameraPosition = {
@@ -15,14 +16,14 @@ export const pages: { [key: string]: Page } = {
     id: 'splash',
     camera: {
       lookAt: new Vector3(0, 0, 0),
-      position: new Vector3(20, 15, 0),
+      position: isMobile ? new Vector3(30, 18, 0) : new Vector3(20, 15, 0),
     },
   },
   initial: {
     id: 'initial',
     camera: {
       lookAt: new Vector3(0, 0, 0),
-      position: new Vector3(12, 8, 0),
+      position: isMobile ? new Vector3(18, 16, 0) : new Vector3(12, 8, 0),
     },
   },
   nextParty: {
@@ -42,7 +43,7 @@ export const pages: { [key: string]: Page } = {
   partyDetails: {
     id: 'partyDetails',
     camera: {
-      lookAt: new Vector3(3, 10, 5),
+      lookAt: isMobile ? new Vector3(3, 10, 5.2) : new Vector3(3, 10, 5),
       position: new Vector3(3, 10, 3.4),
     },
   },

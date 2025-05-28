@@ -14,14 +14,15 @@ import { Socials } from '../components/Socials';
 import { Page, pages } from './pages';
 import { PartyDetails } from './PartyDetails';
 import { PartyHistory } from './PartyHistory';
+import { isMobile } from 'react-device-detect';
 
 const VerticalTitle = styled.h1`
   position: absolute;
   font-family: 'Bootzy';
-  top: 50%;
+  top: ${isMobile ? '25%' : '50%'};
   left: 0;
   font-size: 64px;
-  margin-left: 24px;
+  margin-left: ${isMobile ? '12px' : '24px'};
   animation: ${appear} 1s ease-in-out;
   height: 40%;
   text-align: center;
@@ -32,10 +33,10 @@ const VerticalTitle = styled.h1`
 const VerticalLocation = styled.h2`
   position: absolute;
   font-family: 'Bootzy';
-  top: 50%;
+  top: ${isMobile ? '25%' : '50%'};
   right: 0;
   font-size: 36px;
-  margin-right: 24px;
+  margin-right: ${isMobile ? '12px' : '24px'};
   animation: ${appear} 2s ease-in-out;
   height: 40%;
   text-align: center;
