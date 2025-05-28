@@ -71,7 +71,6 @@ jobs:
     concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
     env:
-      NODE_ENV: production
       VITE_STRAPI_URL: ${{ vars.VITE_STRAPI_URL }}
 
     steps:
