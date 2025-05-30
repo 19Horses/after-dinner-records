@@ -1,9 +1,10 @@
 import { useFrame, useLoader } from '@react-three/fiber';
-import { useEffect, useRef, useState } from 'react';
-import * as THREE from 'three';
-import nextPartyImg from '../assets/next-party.png';
-import { Page, pages } from '../pages/pages';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { isMobile } from 'react-device-detect';
+import * as THREE from 'three';
+import { Page, pages } from '../pages/pages';
+import { PartyType } from '../queries/useGetParties';
+import { getImageDownloadUrl } from '../strapiIntegration';
 
 const TARGET = isMobile
   ? new THREE.Vector3(
@@ -19,9 +20,11 @@ const TARGET = isMobile
 export const NextPartyPoster = ({
   currentPage,
   moveTo,
+  nextParty,
 }: {
   currentPage: Page;
   moveTo: (newCamera: Page) => void;
+  nextParty: PartyType;
 }) => {
   const [hovered, setHovered] = useState(false);
   const [movingToTarget, setMovingToTarget] = useState(false);
@@ -49,7 +52,12 @@ export const NextPartyPoster = ({
     document.body.style.cursor = hovered ? 'pointer' : 'auto';
   }, [hovered]);
 
-  const texture = useLoader(THREE.TextureLoader, nextPartyImg);
+  const url = useMemo(
+    () => getImageDownloadUrl(nextParty.poster.url),
+    [nextParty.poster.url]
+  );
+
+  const texture = useLoader(THREE.TextureLoader, url);
 
   useFrame((_, delta) => {
     const mesh = meshRef.current;
@@ -95,7 +103,7 @@ export const NextPartyPoster = ({
       onPointerLeave={() => setHovered(false)}
       onClick={handleClick}
     >
-      <planeGeometry args={[1, 1]} />
+      <planeGeometry args={[0.8, 1.2]} />
       <meshBasicMaterial map={texture} side={THREE.DoubleSide} />
     </mesh>
   );

@@ -1,9 +1,10 @@
 import { OrbitControls } from '@react-three/drei';
-import { Canvas, useFrame, useLoader } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { styled } from 'styled-components';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+// eslint-disable-next-line import/named
+import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import { appear } from '../animations';
 import { NavBar } from '../components/nav';
 import { Archive } from '../components/nav/Archive';
@@ -14,6 +15,7 @@ import { Socials } from '../components/Socials';
 import { Page, pages } from './pages';
 import { PartyDetails } from './PartyDetails';
 import { PartyHistory } from './PartyHistory';
+import { PartyType } from '../queries/useGetParties';
 
 const VerticalTitle = styled.h1`
   position: absolute;
@@ -45,8 +47,15 @@ const VerticalLocation = styled.h2`
 
 const EPSILON = 1;
 
-export const Landing = ({ isAtSplash }: { isAtSplash: boolean }) => {
-  const gltf = useLoader(GLTFLoader, './backyard.glb');
+export const Landing = ({
+  isAtSplash,
+  gltf,
+  nextParty,
+}: {
+  isAtSplash: boolean;
+  gltf: GLTF;
+  nextParty: PartyType;
+}) => {
   const [pageStack, setPageStack] = useState([pages.initial]);
   const [page, setPage] = useState(pages.splash);
   const lookAtRef = useRef(pages.splash.camera.lookAt);
@@ -87,7 +96,7 @@ export const Landing = ({ isAtSplash }: { isAtSplash: boolean }) => {
       setPage(page);
       setPageStack((prev) => [...prev, page]);
     },
-    [pageStack, page],
+    [pageStack, page]
   );
 
   const goBack = useCallback(() => {
@@ -111,12 +120,16 @@ export const Landing = ({ isAtSplash }: { isAtSplash: boolean }) => {
           autoRotateSpeed={0.9}
         />
         <primitive position={[0, 0, 0]} object={gltf.scene} />
-        <NextPartyPoster moveTo={moveToPage} currentPage={page} />
+        <NextPartyPoster
+          nextParty={nextParty}
+          moveTo={moveToPage}
+          currentPage={page}
+        />
         <Socials />
         {page.id === 'partyHistory' && (
           <PartyHistory doneTransitioning={doneTransitioning} />
         )}
-        {page.id === 'partyDetails' && <PartyDetails />}
+        {page.id === 'partyDetails' && <PartyDetails party={nextParty} />}
       </Canvas>
       {page.id === 'initial' && <VerticalTitle>ADR</VerticalTitle>}
       {page.id === 'initial' && <VerticalLocation>Garden</VerticalLocation>}

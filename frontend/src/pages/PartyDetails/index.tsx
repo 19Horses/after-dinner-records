@@ -1,6 +1,5 @@
 import { Html } from '@react-three/drei';
 import { styled } from 'styled-components';
-import { parties } from '../PartyHistory/parties';
 import {
   DateText,
   Description,
@@ -8,6 +7,7 @@ import {
   TicketLink,
 } from '../PartyHistory/styles';
 import { isMobile } from 'react-device-detect';
+import { PartyType } from '../../queries/useGetParties';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -24,12 +24,13 @@ const Container = styled.div`
   display: flex;
   justify-content: ${isMobile ? 'auto' : 'center'};
   flex-direction: column;
+
+  & > p {
+    width: 60%;
+  }
 `;
 
-export const PartyDetails = () => {
-  const party = parties.sort(
-    (a, b) => +new Date(a.date) - +new Date(b.date)
-  )[0];
+export const PartyDetails = ({ party }: { party: PartyType }) => {
   return (
     <Html fullscreen zIndexRange={[0, 0]}>
       <Wrapper>
