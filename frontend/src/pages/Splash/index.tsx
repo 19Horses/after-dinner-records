@@ -6,6 +6,7 @@ import { Landing } from '../Landing';
 import { Blur, Title, Wrapper } from './styles';
 import { useLoader } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { useGetSocials } from '../../queries/useGetSocials';
 
 export const Splash = () => {
   const [isAtSplash, setIsAtSplash] = useState(true);
@@ -15,9 +16,15 @@ export const Splash = () => {
 
   const { loading, error, data } = useGetNextParty();
 
+  const {
+    loading: loadingSocials,
+    error: errorSocials,
+    data: dataSocials,
+  } = useGetSocials();
+
   const isLoading = useMemo(() => {
-    return loading || loaded !== total;
-  }, [loaded, total, loading]);
+    return loading || loadingSocials || loaded !== total;
+  }, [loaded, total, loading, loadingSocials]);
 
   const handleEnter = () => {
     setIsFadingOut(true);
@@ -34,7 +41,7 @@ export const Splash = () => {
     );
   }
 
-  if (error) {
+  if (error || errorSocials) {
     return (
       <Wrapper>
         <p>Something went wrong!</p>
@@ -48,6 +55,7 @@ export const Splash = () => {
         isAtSplash={isAtSplash}
         gltf={gltf}
         nextParty={data.parties[0]}
+        socials={dataSocials.socials}
       />
       {isAtSplash && (
         <Blur $isFadingOut={isFadingOut}>

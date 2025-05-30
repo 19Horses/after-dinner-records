@@ -407,12 +407,12 @@ export interface ApiPartyParty extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiTestTest extends Struct.CollectionTypeSchema {
-  collectionName: 'tests';
+export interface ApiSocialSocial extends Struct.CollectionTypeSchema {
+  collectionName: 'socials';
   info: {
-    displayName: 'Test';
-    pluralName: 'tests';
-    singularName: 'test';
+    displayName: 'Social';
+    pluralName: 'socials';
+    singularName: 'social';
   };
   options: {
     draftAndPublish: true;
@@ -421,11 +421,16 @@ export interface ApiTestTest extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    link: Schema.Attribute.String & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::test.test'> &
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::social.social'
+    > &
       Schema.Attribute.Private;
+    platform: Schema.Attribute.Enumeration<['instagram', 'spotify']> &
+      Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -942,7 +947,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::party.party': ApiPartyParty;
-      'api::test.test': ApiTestTest;
+      'api::social.social': ApiSocialSocial;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
