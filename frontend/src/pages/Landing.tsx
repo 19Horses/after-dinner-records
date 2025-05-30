@@ -41,7 +41,7 @@ const VerticalLocation = styled.h2`
   animation: ${appear} 2s ease-in-out;
   height: 40%;
   text-align: center;
-  transform: translate(0, -50%);
+  transform: translate(0, -50%) rotateX(180deg) scaleX(-1);
   writing-mode: vertical-lr;
 `;
 
