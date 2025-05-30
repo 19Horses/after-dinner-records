@@ -11,11 +11,12 @@ import { Archive } from '../components/nav/Archive';
 import { Back } from '../components/nav/Back';
 import { Close } from '../components/nav/Close';
 import { NextPartyPoster } from '../components/NextPartyPoster';
-import { Socials } from '../components/Socials';
+import { PartyType } from '../queries/useGetParties';
 import { Page, pages } from './pages';
 import { PartyDetails } from './PartyDetails';
 import { PartyHistory } from './PartyHistory';
-import { PartyType } from '../queries/useGetParties';
+import { Socials } from './Socials';
+import { SocialType } from '../queries/useGetSocials';
 
 const VerticalTitle = styled.h1`
   position: absolute;
@@ -41,7 +42,7 @@ const VerticalLocation = styled.h2`
   animation: ${appear} 2s ease-in-out;
   height: 40%;
   text-align: center;
-  transform: translate(0, -50%);
+  transform: translate(0, -50%) rotateX(180deg) scaleX(-1);
   writing-mode: vertical-lr;
 `;
 
@@ -51,10 +52,12 @@ export const Landing = ({
   isAtSplash,
   gltf,
   nextParty,
+  socials,
 }: {
   isAtSplash: boolean;
   gltf: GLTF;
   nextParty: PartyType;
+  socials: SocialType[];
 }) => {
   const [pageStack, setPageStack] = useState([pages.initial]);
   const [page, setPage] = useState(pages.splash);
@@ -102,7 +105,7 @@ export const Landing = ({
   const goBack = useCallback(() => {
     const copiedStack = [...pageStack];
     copiedStack.pop();
-    setPage(copiedStack[copiedStack.length - 1] || pages.initial);
+    moveToPage(copiedStack[copiedStack.length - 1] || pages.initial);
     setPageStack(copiedStack);
   }, [pageStack]);
 
@@ -125,7 +128,7 @@ export const Landing = ({
           moveTo={moveToPage}
           currentPage={page}
         />
-        <Socials />
+        <Socials socials={socials} />
         {page.id === 'partyHistory' && (
           <PartyHistory doneTransitioning={doneTransitioning} />
         )}
