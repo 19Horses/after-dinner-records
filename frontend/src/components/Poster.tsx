@@ -1,6 +1,7 @@
 import { ThreeEvent, useFrame, useLoader } from '@react-three/fiber';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
+import { getImageDownloadUrl } from '../strapiIntegration';
 
 export const Poster = ({ src }: { src: string }) => {
   const [hovered, setHovered] = useState(false);
@@ -8,7 +9,7 @@ export const Poster = ({ src }: { src: string }) => {
     document.body.style.cursor = hovered ? 'crosshair' : 'auto';
   }, [hovered]);
 
-  const url = useMemo(() => `${import.meta.env.VITE_STRAPI_URL}${src}`, [src]);
+  const url = useMemo(() => getImageDownloadUrl(src), [src]);
 
   const texture = useLoader(THREE.TextureLoader, url);
   const meshRef =

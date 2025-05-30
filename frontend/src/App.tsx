@@ -5,11 +5,10 @@ import { styled } from 'styled-components';
 import { fadeIn } from './animations';
 import { Enter } from './components/nav/Enter';
 import { Landing } from './pages/Landing';
-
-console.log(import.meta.env.VITE_STRAPI_URL);
+import { STRAPI_URL } from './strapiIntegration';
 
 const client = new ApolloClient({
-  uri: `${import.meta.env.VITE_STRAPI_URL}/graphql/`,
+  uri: `${STRAPI_URL}/graphql/`,
   cache: new InMemoryCache(),
 });
 
@@ -79,8 +78,6 @@ const App = () => {
     <ApolloProvider client={client}>
       <Wrapper>
         <Landing isAtSplash={isAtSplash} />
-        {/* <Home /> */}
-        {/* <ReactP5Wrapper sketch={sketch} /> */}
         {isAtSplash && (
           <Blur $isFadingOut={isFadingOut}>
             <Title>AFTER DINNER RECORDS</Title>

@@ -50,7 +50,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NODE_ENV: production
-      VITE_STRAPI_URL: ${{ vars.VITE_STRAPI_URL }}
 
     steps:
       - name: Check out Git repository
@@ -80,8 +79,6 @@ jobs:
           yarn install
           yarn build
         working-directory: frontend
-        env:
-          VITE_STRAPI_URL: ${{ vars.VITE_STRAPI_URL }}
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.2.5
