@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/named
 import { ThreeEvent, useFrame, useLoader } from '@react-three/fiber';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';

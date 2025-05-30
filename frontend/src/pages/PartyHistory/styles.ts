@@ -55,6 +55,17 @@ export const Content = styled.div`
   width: 100%;
   height: 100%;
   padding: 24px;
+  overflow: hidden;
+  box-sizing: border-box;
+`;
+
+export const PartyImage = styled.img`
+  animation: ${fadeIn} 0.5s ease-in-out forwards;
+  width: 50%;
+  max-width: 250px;
+  align-self: center;
+  margin-top: 64px;
+  margin-bottom: 12px;
 `;
 
 export const Description = styled.p`
