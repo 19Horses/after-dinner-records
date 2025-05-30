@@ -1,6 +1,5 @@
 import { Html } from '@react-three/drei';
-import { useMemo, useState } from 'react';
-import { isMobile } from 'react-device-detect';
+import { useState } from 'react';
 import { PartyType } from '../../queries/useGetParties';
 import { pages } from '../pages';
 import { Party } from './Party';
