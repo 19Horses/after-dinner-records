@@ -1,6 +1,6 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { useProgress } from '@react-three/drei';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { styled } from 'styled-components';
 import { fadeIn } from './animations';
 import { Enter } from './components/nav/Enter';
@@ -64,13 +64,16 @@ const App = () => {
     }, 1000);
   };
 
+  useEffect(() => {
+    console.log('App mounted');
+    return () => console.log('App unmounted');
+  }, []);
+
   if (isLoading) {
     return (
-      <ApolloProvider client={client}>
-        <Wrapper>
-          <p>Loading...</p>
-        </Wrapper>
-      </ApolloProvider>
+      <Wrapper>
+        <p>Loading...</p>
+      </Wrapper>
     );
   }
 

@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
-import { Poster } from '../../components/Poster';
 import { PartyType } from '../../queries/useGetParties';
+import { getImageDownloadUrl } from '../../strapiIntegration';
 import {
-  CanvasForPartyPoster,
   Content,
   DateText,
   Description,
   Drawer,
   Lineup,
+  PartyImage,
   TicketLink,
 } from './styles';
 
@@ -66,9 +66,10 @@ export const Party = ({
       )}
       {showContent && (
         <Content>
-          <CanvasForPartyPoster onClick={(e) => e.stopPropagation()}>
-            <Poster src={party.poster.url} />
-          </CanvasForPartyPoster>
+          <PartyImage
+            src={getImageDownloadUrl(party.poster.url)}
+            alt="Party poster"
+          />
           <DateText>{party.date}</DateText>
           <Lineup>{party.lineup}</Lineup>
           <Description>{party.description}</Description>
