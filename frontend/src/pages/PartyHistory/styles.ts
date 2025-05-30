@@ -54,7 +54,7 @@ export const Content = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  padding: 24px;
+  padding: 30px;
   overflow: hidden;
   box-sizing: border-box;
 `;
