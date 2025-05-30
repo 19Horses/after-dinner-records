@@ -19,14 +19,16 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-  width: ${isMobile ? '80%' : '50%'};
+  width: ${isMobile ? '100%' : '50%'};
   height: ${isMobile ? '45%' : '100%'};
   display: flex;
   justify-content: ${isMobile ? 'auto' : 'center'};
   flex-direction: column;
+  padding: ${isMobile ? '0px 30px' : '0px'};
+  box-sizing: border-box;
 
   & > p {
-    width: 60%;
+    width: ${isMobile ? '100%' : '50%'};
   }
 `;
 
