@@ -102,7 +102,7 @@ export const Landing = ({
   const goBack = useCallback(() => {
     const copiedStack = [...pageStack];
     copiedStack.pop();
-    setPage(copiedStack[copiedStack.length - 1] || pages.initial);
+    moveToPage(copiedStack[copiedStack.length - 1] || pages.initial);
     setPageStack(copiedStack);
   }, [pageStack]);
 
