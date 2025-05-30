@@ -2,15 +2,7 @@ import { useFrame, useLoader } from '@react-three/fiber';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 
-export const Social = ({
-  src,
-  position,
-  link,
-}: {
-  src: string;
-  link: string;
-  position: THREE.Vector3;
-}) => {
+export const Social = ({ src, link }: { src: string; link: string }) => {
   const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
@@ -31,7 +23,6 @@ export const Social = ({
     <mesh
       onPointerEnter={() => setHovered(true)}
       onPointerLeave={() => setHovered(false)}
-      position={position}
       ref={meshRef}
       onClick={() => window.open(link)}
     >
