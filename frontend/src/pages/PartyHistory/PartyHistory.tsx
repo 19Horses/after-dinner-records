@@ -6,9 +6,8 @@ import { Party } from './Party';
 import { Container } from './styles';
 
 export const PartyHistoryContent = ({ parties }: { parties: PartyType[] }) => {
-  const sortedParties = [...parties].reverse();
   const [openParty, setOpenParty] = useState<PartyType | null>(
-    sortedParties[sortedParties.length - 1]
+    parties[parties.length - 1]
   );
 
   const onPartyOpen = (p: PartyType | null) => {
@@ -22,7 +21,7 @@ export const PartyHistoryContent = ({ parties }: { parties: PartyType[] }) => {
       zIndexRange={[10, 10]}
     >
       <Container>
-        {sortedParties.map((project, i) => (
+        {parties.map((project, i) => (
           <Party
             key={i}
             index={i}
