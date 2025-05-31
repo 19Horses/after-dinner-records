@@ -53,8 +53,6 @@ export const Splash = () => {
     );
   }
 
-  console.log(parties, socials);
-
   return (
     <Wrapper>
       <Landing
