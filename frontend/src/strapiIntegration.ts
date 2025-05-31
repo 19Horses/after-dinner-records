@@ -6,3 +6,5 @@ export const getImageDownloadUrl = (extension: string) => {
   if (import.meta.env.DEV) return `${STRAPI_URL}${extension}`;
   return extension;
 };
+
+export const getApiUrl = (extension: string) => `${STRAPI_URL}/api${extension}`;
