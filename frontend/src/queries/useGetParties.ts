@@ -1,4 +1,6 @@
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@tanstack/react-query';
+import { getApiUrl } from '../strapiIntegration';
+import axios from 'axios';
 
 export type PartyType = {
   documentId: number;
@@ -12,22 +14,16 @@ export type PartyType = {
   isNextParty: boolean;
 };
 
-const PARTIES = gql`
-  query GetParties {
-    parties {
-      date
-      description
-      documentId
-      isNextParty
-      lineup
-      poster {
-        url
-      }
-      ticketLink
-    }
-  }
-`;
+const getParties = async (): Promise<{ data: PartyType[] }> => {
+  const response = await axios.get(getApiUrl('/parties?populate=*'));
+  return response.data;
+};
 
 export const useGetParties = () => {
-  return useQuery(PARTIES);
+  return useQuery({
+    queryKey: ['partiesData'],
+    queryFn: getParties,
+    select: (res) =>
+      res.data.sort((a, b) => +new Date(a.date) - +new Date(b.date)),
+  });
 };

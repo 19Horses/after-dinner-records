@@ -1,16 +1,16 @@
 import { Html } from '@react-three/drei';
-import { PartyType, useGetParties } from '../../queries/useGetParties';
 import { pages } from '../pages';
 import { PartyHistoryContent } from './PartyHistory';
+import { useGetParties } from '../../queries/useGetParties';
 
 export const PartyHistory = ({
   doneTransitioning,
 }: {
   doneTransitioning: boolean;
 }) => {
-  const { loading, error, data } = useGetParties();
+  const { isLoading, isError, data: parties } = useGetParties();
 
-  if (loading) {
+  if (isLoading) {
     return (
       <Html
         fullscreen
@@ -22,7 +22,7 @@ export const PartyHistory = ({
     );
   }
 
-  if (error) {
+  if (isError || !parties) {
     return (
       <Html
         fullscreen
@@ -37,8 +37,6 @@ export const PartyHistory = ({
   if (!doneTransitioning) {
     return null;
   }
-
-  const parties: PartyType[] = data.parties;
 
   return <PartyHistoryContent parties={parties} />;
 };

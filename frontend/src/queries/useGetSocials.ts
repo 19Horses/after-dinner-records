@@ -1,4 +1,6 @@
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@tanstack/react-query';
+import { getApiUrl } from '../strapiIntegration';
+import axios from 'axios';
 
 export type SocialType = {
   documentId: number;
@@ -6,16 +8,15 @@ export type SocialType = {
   platform: 'instagram' | 'spotify';
 };
 
-const SOCIALS = gql`
-  query Socials {
-    socials {
-      documentId
-      link
-      platform
-    }
-  }
-`;
+const getSocials = async (): Promise<{ data: SocialType[] }> => {
+  const response = await axios.get(getApiUrl('/socials'));
+  return response.data;
+};
 
 export const useGetSocials = () => {
-  return useQuery(SOCIALS);
+  return useQuery({
+    queryKey: ['socialsData'],
+    queryFn: getSocials,
+    select: (res) => res.data,
+  });
 };

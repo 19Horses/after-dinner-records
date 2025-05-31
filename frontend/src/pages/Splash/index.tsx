@@ -1,12 +1,12 @@
 import { useProgress } from '@react-three/drei';
+import { useLoader } from '@react-three/fiber';
 import { useMemo, useState } from 'react';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { Enter } from '../../components/nav/Enter';
-import { useGetNextParty } from '../../queries/useGetNextParty';
+import { useGetParties } from '../../queries/useGetParties';
+import { useGetSocials } from '../../queries/useGetSocials';
 import { Landing } from '../Landing';
 import { Blur, Title, Wrapper } from './styles';
-import { useLoader } from '@react-three/fiber';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { useGetSocials } from '../../queries/useGetSocials';
 
 export const Splash = () => {
   const [isAtSplash, setIsAtSplash] = useState(true);
@@ -14,17 +14,21 @@ export const Splash = () => {
   const gltf = useLoader(GLTFLoader, './backyard.glb');
   const { loaded, total } = useProgress();
 
-  const { loading, error, data } = useGetNextParty();
+  const {
+    data: parties,
+    isLoading: isLoadingParties,
+    isError: isErrorParties,
+  } = useGetParties();
 
   const {
-    loading: loadingSocials,
-    error: errorSocials,
-    data: dataSocials,
+    data: socials,
+    isLoading: isLoadingSocials,
+    isError: isErrorSocials,
   } = useGetSocials();
 
   const isLoading = useMemo(() => {
-    return loading || loadingSocials || loaded !== total;
-  }, [loaded, total, loading, loadingSocials]);
+    return isLoadingParties || isLoadingSocials || loaded !== total;
+  }, [loaded, total, isLoadingParties, isLoadingSocials]);
 
   const handleEnter = () => {
     setIsFadingOut(true);
@@ -41,7 +45,7 @@ export const Splash = () => {
     );
   }
 
-  if (error || errorSocials) {
+  if (isErrorParties || isErrorSocials || !parties || !socials) {
     return (
       <Wrapper>
         <p>Something went wrong!</p>
@@ -54,8 +58,8 @@ export const Splash = () => {
       <Landing
         isAtSplash={isAtSplash}
         gltf={gltf}
-        nextParty={data.parties[0]}
-        socials={dataSocials.socials}
+        nextParty={parties[parties.length - 1]}
+        socials={socials}
       />
       {isAtSplash && (
         <Blur $isFadingOut={isFadingOut}>
