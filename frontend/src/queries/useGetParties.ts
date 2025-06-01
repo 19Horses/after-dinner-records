@@ -3,19 +3,35 @@ import { getApiUrl } from '../strapiIntegration';
 import axios from 'axios';
 
 export type PartyType = {
-  documentId: number;
+  _id: number;
   date: string;
   description: string;
   poster: {
-    url: string;
+    asset: {
+      url: string;
+    };
   };
   lineup: string;
   ticketLink: string;
-  isNextParty: boolean;
 };
 
-const getParties = async (): Promise<{ data: PartyType[] }> => {
-  const response = await axios.get(getApiUrl('/parties?populate=*'));
+const query = `
+  *[_type == 'party']{
+  _id,
+  date,
+  description,
+  lineup,
+  poster {
+    asset -> {
+      url
+    }
+  },
+  ticketLink
+} | order(date asc)
+`;
+
+const getParties = async (): Promise<{ result: PartyType[] }> => {
+  const response = await axios.get(getApiUrl(query));
   return response.data;
 };
 
@@ -23,7 +39,6 @@ export const useGetParties = () => {
   return useQuery({
     queryKey: ['partiesData'],
     queryFn: getParties,
-    select: (res) =>
-      res.data.sort((a, b) => +new Date(a.date) - +new Date(b.date)),
+    select: (res) => res.result,
   });
 };
