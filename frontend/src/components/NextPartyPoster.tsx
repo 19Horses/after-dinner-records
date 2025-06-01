@@ -1,10 +1,9 @@
 import { useFrame, useLoader } from '@react-three/fiber';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import * as THREE from 'three';
 import { Page, pages } from '../pages/pages';
 import { PartyType } from '../queries/useGetParties';
-import { getImageDownloadUrl } from '../strapiIntegration';
 
 const TARGET = isMobile
   ? new THREE.Vector3(
@@ -52,12 +51,7 @@ export const NextPartyPoster = ({
     document.body.style.cursor = hovered ? 'pointer' : 'auto';
   }, [hovered]);
 
-  const url = useMemo(
-    () => getImageDownloadUrl(nextParty.poster.url),
-    [nextParty.poster.url]
-  );
-
-  const texture = useLoader(THREE.TextureLoader, url);
+  const texture = useLoader(THREE.TextureLoader, nextParty.poster.asset.url);
 
   useFrame((_, delta) => {
     const mesh = meshRef.current;

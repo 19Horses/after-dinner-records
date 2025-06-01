@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { PartyType } from '../../queries/useGetParties';
-import { getImageDownloadUrl } from '../../strapiIntegration';
 import {
   Content,
   DateText,
@@ -23,12 +22,8 @@ export const Party = ({
   onOpen: (p: PartyType | null) => void;
   openParty: PartyType | null;
 }) => {
-  const [isOpen, setIsOpen] = useState(
-    openParty?.documentId === party.documentId
-  );
-  const [showContent, setShowContent] = useState(
-    openParty?.documentId === party.documentId
-  );
+  const [isOpen, setIsOpen] = useState(openParty?._id === party._id);
+  const [showContent, setShowContent] = useState(openParty?._id === party._id);
 
   useEffect(() => {
     if (!openParty && isOpen) {
@@ -36,7 +31,7 @@ export const Party = ({
       setIsOpen(false);
     }
     if (openParty) {
-      if (openParty.documentId !== party.documentId && isOpen) {
+      if (openParty._id !== party._id && isOpen) {
         setShowContent(false);
         setIsOpen(false);
       }
@@ -66,10 +61,7 @@ export const Party = ({
       )}
       {showContent && (
         <Content>
-          <PartyImage
-            src={getImageDownloadUrl(party.poster.url)}
-            alt="Party poster"
-          />
+          <PartyImage src={party.poster.asset.url} alt="Party poster" />
           <DateText>{party.date}</DateText>
           <Lineup>{party.lineup}</Lineup>
           <Description>{party.description}</Description>

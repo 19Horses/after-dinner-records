@@ -22,7 +22,7 @@ export const Socials = ({ socials }: { socials: SocialType[] }) => {
             height="auto"
             flexGrow={1}
             centerAnchor
-            key={social.documentId}
+            key={social._id}
           >
             <Social
               link={social.link}
