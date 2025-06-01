@@ -1,0 +1,20 @@
+name: Backend Actions
+
+on: [push]
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    name: deploy
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy
+        run: yarn deploy
+        working-directory: backend
