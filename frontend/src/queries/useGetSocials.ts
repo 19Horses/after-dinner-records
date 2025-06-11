@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getApiUrl } from '../strapiIntegration';
+import { getApiUrl } from '../sanityIntegration';
 import axios from 'axios';
 
 export type SocialType = {
