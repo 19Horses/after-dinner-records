@@ -36,10 +36,12 @@ export const NextPartyPoster = ({
   );
 
   useEffect(() => {
-    if (currentPage.id !== 'partyDetails' && isAtTarget) {
+    if (currentPage.id !== 'partyDetails') {
       setMoving(true);
       setIsAtTarget(false);
+      setMovingToTarget(false);
     } else if (currentPage.id === 'partyDetails' && !isAtTarget) {
+      setMoving(false);
       setMovingToTarget(true);
     }
   }, [currentPage]);
@@ -53,31 +55,72 @@ export const NextPartyPoster = ({
 
   const texture = useLoader(THREE.TextureLoader, nextParty.poster.asset.url);
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
     const mesh = meshRef.current;
-    if (mesh) {
+    if (!mesh) return;
+
+    const targetScale =
+      hovered && currentPage.id === 'nextParty'
+        ? new THREE.Vector3(1.4, 1.4, 1.4)
+        : new THREE.Vector3(1.2, 1.2, 1.2);
+    mesh.scale.lerp(targetScale, 0.1);
+
+    if (hovered && currentPage.id === 'nextParty') {
+      const targetRotation = new THREE.Euler(0, 4, 0);
+      mesh.rotation.x = THREE.MathUtils.lerp(
+        mesh.rotation.x,
+        targetRotation.x,
+        0.1
+      );
+      mesh.rotation.y = THREE.MathUtils.lerp(
+        mesh.rotation.y,
+        targetRotation.y,
+        0.1
+      );
+      mesh.rotation.z = THREE.MathUtils.lerp(
+        mesh.rotation.z,
+        targetRotation.z,
+        0.1
+      );
+
+      const mouseX = state.pointer.x;
+      const mouseY = state.pointer.y;
+
+      mesh.rotation.y = THREE.MathUtils.lerp(
+        mesh.rotation.y,
+        mouseX * 0.3,
+        0.1
+      );
+      mesh.rotation.x = THREE.MathUtils.lerp(
+        mesh.rotation.x,
+        -mouseY * 0.2,
+        0.1
+      );
+    } else if (!hovered && currentPage.id !== 'partyDetails') {
+      mesh.rotation.y = 2 + Math.sin(state.clock.elapsedTime * 0.5) * 0.3;
+    } else {
       mesh.rotation.y += delta * 0.5;
+    }
 
-      if (movingToTarget) {
-        const current = mesh.position;
-        current.lerp(targetPosition, delta * 3);
+    if (movingToTarget) {
+      const current = mesh.position;
+      current.lerp(targetPosition, delta * 3);
 
-        if (current.distanceTo(targetPosition) < 0.01) {
-          mesh.position.copy(targetPosition);
-          setMovingToTarget(false);
-          setIsAtTarget(true);
-        }
+      if (current.distanceTo(targetPosition) < 0.01) {
+        mesh.position.copy(targetPosition);
+        setMovingToTarget(false);
+        setIsAtTarget(true);
       }
+    }
 
-      if (moving) {
-        const current = mesh.position;
-        const initialPos = meshPosition.current;
-        current.lerp(initialPos, delta * 3);
+    if (moving) {
+      const current = mesh.position;
+      const initialPos = meshPosition.current;
+      current.lerp(initialPos, delta * 3);
 
-        if (current.distanceTo(initialPos) < 0.01) {
-          mesh.position.copy(initialPos);
-          setMoving(false);
-        }
+      if (current.distanceTo(initialPos) < 0.01) {
+        mesh.position.copy(initialPos);
+        setMoving(false);
       }
     }
   });
