@@ -61,8 +61,8 @@ export const NextPartyPoster = ({
 
     const targetScale =
       hovered && currentPage.id === 'nextParty'
-        ? new THREE.Vector3(1.4, 1.4, 1.4)
-        : new THREE.Vector3(1.2, 1.2, 1.2);
+        ? new THREE.Vector3(1.25, 1.25, 1.25)
+        : new THREE.Vector3(1.1, 1.1, 1.1);
     mesh.scale.lerp(targetScale, 0.1);
 
     if (hovered && currentPage.id === 'nextParty') {
@@ -97,7 +97,7 @@ export const NextPartyPoster = ({
         0.1
       );
     } else if (!hovered && currentPage.id !== 'partyDetails') {
-      mesh.rotation.y = 2 + Math.sin(state.clock.elapsedTime * 0.5) * 0.3;
+      mesh.rotation.y = 2 + Math.sin(state.clock.elapsedTime * 0.5) * 0.4;
     } else {
       mesh.rotation.y += delta * 0.5;
     }

@@ -13,9 +13,17 @@ export const Social = ({ src, link }: { src: string; link: string }) => {
   const meshRef =
     useRef<THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial>>(null);
 
-  useFrame((_, delta) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y += delta * Math.random();
+  useFrame((state) => {
+    const mesh = meshRef.current;
+    if (mesh) {
+      const targetScale = hovered
+        ? new THREE.Vector3(1.2, 1.2, 1.2)
+        : new THREE.Vector3(1.1, 1.1, 1.1);
+      mesh.scale.lerp(targetScale, 0.1);
+
+      if (!hovered) {
+        mesh.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.5;
+      }
     }
   });
 
