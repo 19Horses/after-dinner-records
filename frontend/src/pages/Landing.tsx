@@ -17,33 +17,46 @@ import { PartyDetails } from './PartyDetails';
 import { PartyHistory } from './PartyHistory';
 import { Socials } from './Socials';
 import { SocialType } from '../queries/useGetSocials';
+import { Menu } from '../components/menu';
 
 const VerticalTitle = styled.h1`
   position: absolute;
   font-family: 'Bootzy';
-  top: ${isMobile ? '25%' : '50%'};
+  top: 50%;
   left: 0;
   font-size: 64px;
-  margin-left: ${isMobile ? '12px' : '24px'};
+  margin-left: 24px;
+  transition: all 0.5s ease-in-out;
   animation: ${appear} 1s ease-in-out;
   height: 40%;
   text-align: center;
   transform: translate(0, -50%);
   writing-mode: vertical-rl;
+
+  @media (max-width: 768px) {
+    top: 80%;
+    margin-left: 12px;
+  }
 `;
 
 const VerticalLocation = styled.h2`
   position: absolute;
   font-family: 'Bootzy';
-  top: ${isMobile ? '25%' : '50%'};
+  top: 50%;
   right: 0;
   font-size: 36px;
-  margin-right: ${isMobile ? '12px' : '24px'};
+  margin-right: 24px;
+  transition: all 0.5s ease-in-out;
   animation: ${appear} 2s ease-in-out;
   height: 40%;
   text-align: center;
   transform: translate(0, -50%) rotateX(180deg) scaleX(-1);
   writing-mode: vertical-lr;
+
+  @media (max-width: 768px) {
+    top: 80%;
+    margin-right: 12px;
+  }
 `;
 
 const EPSILON = 1;
@@ -136,15 +149,16 @@ export const Landing = ({
       </Canvas>
       {page.id === 'initial' && <VerticalTitle>ADR</VerticalTitle>}
       {page.id === 'initial' && <VerticalLocation>Garden</VerticalLocation>}
-      {!isAtSplash && page.id !== 'partyHistory' && (
+      {/* {!isAtSplash && page.id !== 'partyHistory' && (
         <NavBar currentPage={page} moveTo={moveToPage} />
-      )}
-      {page.id !== 'splash' && (
+      )} */}
+      <Menu moveTo={moveToPage} />
+      {/* {page.id !== 'splash' && (
         <>
           {page.id !== 'initial' && <Close moveTo={moveToPage} />}
           {page.id !== 'initial' && <Back goBack={goBack} />}
         </>
-      )}
+      )} */}
       {page.id === 'partyDetails' && <Archive moveTo={moveToPage} />}
     </>
   );
