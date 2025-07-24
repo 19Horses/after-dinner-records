@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { slideIn } from '../../animations';
+import { appear, slideIn } from '../../animations';
 
 export const Blur = styled.div<{ $show: boolean }>`
   width: 100%;
@@ -36,6 +36,7 @@ export const MenuButton = styled.button<{ $show: boolean }>`
   position: fixed;
   right: 0;
   top: 0;
+  animation: ${appear} 1s ease-in-out;
   margin-right: ${({ $show }) => ($show ? '24px' : '-100px')};
   margin-top: 24px;
   z-index: 11;

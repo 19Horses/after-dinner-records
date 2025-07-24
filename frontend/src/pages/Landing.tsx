@@ -1,23 +1,19 @@
 import { OrbitControls } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { isMobile } from 'react-device-detect';
 import { styled } from 'styled-components';
 // eslint-disable-next-line import/named
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import { appear } from '../animations';
-import { NavBar } from '../components/nav';
+import { Menu } from '../components/menu';
 import { Archive } from '../components/nav/Archive';
-import { Back } from '../components/nav/Back';
-import { Close } from '../components/nav/Close';
 import { NextPartyPoster } from '../components/NextPartyPoster';
 import { PartyType } from '../queries/useGetParties';
+import { SocialType } from '../queries/useGetSocials';
 import { Page, pages } from './pages';
 import { PartyDetails } from './PartyDetails';
 import { PartyHistory } from './PartyHistory';
 import { Socials } from './Socials';
-import { SocialType } from '../queries/useGetSocials';
-import { Menu } from '../components/menu';
 
 const VerticalTitle = styled.h1`
   position: absolute;
@@ -34,7 +30,7 @@ const VerticalTitle = styled.h1`
   writing-mode: vertical-rl;
 
   @media (max-width: 768px) {
-    top: 80%;
+    top: 25%;
     margin-left: 12px;
   }
 `;
@@ -54,7 +50,7 @@ const VerticalLocation = styled.h2`
   writing-mode: vertical-lr;
 
   @media (max-width: 768px) {
-    top: 80%;
+    top: 25%;
     margin-right: 12px;
   }
 `;
@@ -72,7 +68,6 @@ export const Landing = ({
   nextParty: PartyType;
   socials: SocialType[];
 }) => {
-  const [pageStack, setPageStack] = useState([pages.initial]);
   const [page, setPage] = useState(pages.splash);
   const lookAtRef = useRef(pages.splash.camera.lookAt);
   const [doneTransitioning, setDoneTransitioning] = useState(false);
@@ -110,17 +105,9 @@ export const Landing = ({
     (page: Page) => {
       setDoneTransitioning(false);
       setPage(page);
-      setPageStack((prev) => [...prev, page]);
     },
-    [pageStack, page]
+    [page]
   );
-
-  const goBack = useCallback(() => {
-    const copiedStack = [...pageStack];
-    copiedStack.pop();
-    moveToPage(copiedStack[copiedStack.length - 1] || pages.initial);
-    setPageStack(copiedStack);
-  }, [pageStack]);
 
   return (
     <>
@@ -149,16 +136,7 @@ export const Landing = ({
       </Canvas>
       {page.id === 'initial' && <VerticalTitle>ADR</VerticalTitle>}
       {page.id === 'initial' && <VerticalLocation>Garden</VerticalLocation>}
-      {/* {!isAtSplash && page.id !== 'partyHistory' && (
-        <NavBar currentPage={page} moveTo={moveToPage} />
-      )} */}
-      <Menu moveTo={moveToPage} />
-      {/* {page.id !== 'splash' && (
-        <>
-          {page.id !== 'initial' && <Close moveTo={moveToPage} />}
-          {page.id !== 'initial' && <Back goBack={goBack} />}
-        </>
-      )} */}
+      {page.id !== 'splash' && <Menu moveTo={moveToPage} />}
       {page.id === 'partyDetails' && <Archive moveTo={moveToPage} />}
     </>
   );
