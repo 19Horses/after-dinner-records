@@ -1,13 +1,15 @@
 import { useMemo, useState } from 'react';
-import { Blur, List, ListItem, MenuButton } from './styles';
+import { Blur, CurrentLocation, List, ListItem, MenuButton } from './styles';
 import { Page, pages } from '../../pages/pages';
 
 export const Menu = ({ moveTo }: { moveTo: (page: Page) => void }) => {
   const [showMenu, setShowMenu] = useState(false);
+  const [currentLocation, setCurrentLocation] = useState('Home');
 
   const items = useMemo(() => {
     return [
       { name: 'Next Party', onClick: () => moveTo(pages.nextParty) },
+      { name: 'Party Details', onClick: () => moveTo(pages.partyDetails) },
       { name: 'Archive', onClick: () => moveTo(pages.partyHistory) },
       { name: 'Socials', onClick: () => moveTo(pages.socials) },
       { name: 'Home', onClick: () => moveTo(pages.initial) },
@@ -26,6 +28,7 @@ export const Menu = ({ moveTo }: { moveTo: (page: Page) => void }) => {
                 onClick={() => {
                   setShowMenu(false);
                   item.onClick();
+                  setCurrentLocation(item.name);
                 }}
               >
                 {item.name}
@@ -43,6 +46,7 @@ export const Menu = ({ moveTo }: { moveTo: (page: Page) => void }) => {
       <MenuButton $show={showMenu} onClick={() => setShowMenu((prev) => !prev)}>
         x close
       </MenuButton>
+      <CurrentLocation $show={!showMenu}>@ {currentLocation}</CurrentLocation>
     </>
   );
 };

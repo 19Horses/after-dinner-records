@@ -48,6 +48,21 @@ export const MenuButton = styled.button<{ $show: boolean }>`
   }
 `;
 
+export const CurrentLocation = styled.p<{ $show: boolean }>`
+  font-size: 16px;
+  position: fixed;
+  right: 0;
+  top: 32px;
+  animation: ${appear} 1s ease-in-out;
+  margin-top: 24px;
+  margin-right: ${({ $show }) => ($show ? '24px' : '-100px')};
+  z-index: 11;
+  transition: all 0.2s ease-in-out;
+  padding: 0;
+  color: red;
+  writing-mode: vertical-rl;
+`;
+
 export const List = styled.ul`
   list-style: none;
   padding: 0;
@@ -61,7 +76,7 @@ export const List = styled.ul`
   gap: 12px;
 `;
 
-export const ListItem = styled.li<{ $delay: number }>`
+export const ListItem = styled.button<{ $delay: number }>`
   font-size: 20px;
   font-weight: 800;
   color: black;
@@ -70,4 +85,11 @@ export const ListItem = styled.li<{ $delay: number }>`
   opacity: 0;
   animation: ${slideIn} 0.6s ease-out forwards;
   animation-delay: ${({ $delay }) => $delay}s;
+  background-color: transparent;
+  border: none;
+  outline: none;
+
+  &:hover {
+    color: red;
+  }
 `;

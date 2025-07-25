@@ -6,7 +6,6 @@ import { styled } from 'styled-components';
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import { appear } from '../animations';
 import { Menu } from '../components/menu';
-import { Archive } from '../components/nav/Archive';
 import { NextPartyPoster } from '../components/NextPartyPoster';
 import { PartyType } from '../queries/useGetParties';
 import { SocialType } from '../queries/useGetSocials';
@@ -134,10 +133,9 @@ export const Landing = ({
         )}
         {page.id === 'partyDetails' && <PartyDetails party={nextParty} />}
       </Canvas>
+      {page.id !== 'splash' && <Menu moveTo={moveToPage} />}
       {page.id === 'initial' && <VerticalTitle>ADR</VerticalTitle>}
       {page.id === 'initial' && <VerticalLocation>Garden</VerticalLocation>}
-      {page.id !== 'splash' && <Menu moveTo={moveToPage} />}
-      {page.id === 'partyDetails' && <Archive moveTo={moveToPage} />}
     </>
   );
 };
