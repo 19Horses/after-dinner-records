@@ -73,7 +73,7 @@ export const List = styled.ul`
   transition: all 0.4s ease-in-out;
   height: 100%;
   margin: 0;
-  gap: 12px;
+  gap: 20px;
 `;
 
 export const ListItem = styled.button<{ $delay: number }>`
