@@ -88,6 +88,8 @@ export const ListItem = styled.button<{ $delay: number }>`
   background-color: transparent;
   border: none;
   outline: none;
+  text-transform: uppercase;
+  padding: 0;
 
   &:hover {
     color: red;

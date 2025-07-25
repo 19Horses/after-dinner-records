@@ -50,8 +50,12 @@ export const NextPartyPoster = ({
     useRef<THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial>>(null);
 
   useEffect(() => {
+    if (currentPage.id === 'partyDetails') {
+      document.body.style.cursor = 'auto';
+      return;
+    }
     document.body.style.cursor = hovered ? 'pointer' : 'auto';
-  }, [hovered]);
+  }, [hovered, currentPage]);
 
   const texture = useLoader(THREE.TextureLoader, nextParty.poster.asset.url);
 
