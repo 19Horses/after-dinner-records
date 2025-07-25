@@ -133,7 +133,7 @@ export const Landing = ({
         )}
         {page.id === 'partyDetails' && <PartyDetails party={nextParty} />}
       </Canvas>
-      {page.id !== 'splash' && <Menu moveTo={moveToPage} />}
+      {page.id !== 'splash' && <Menu moveTo={moveToPage} currentPage={page} />}
       {page.id === 'initial' && <VerticalTitle>ADR</VerticalTitle>}
       {page.id === 'initial' && <VerticalLocation>Garden</VerticalLocation>}
     </>

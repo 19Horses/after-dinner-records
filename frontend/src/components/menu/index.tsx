@@ -1,8 +1,14 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Blur, CurrentLocation, List, ListItem, MenuButton } from './styles';
 import { Page, pages } from '../../pages/pages';
 
-export const Menu = ({ moveTo }: { moveTo: (page: Page) => void }) => {
+export const Menu = ({
+  moveTo,
+  currentPage,
+}: {
+  moveTo: (page: Page) => void;
+  currentPage: Page;
+}) => {
   const [showMenu, setShowMenu] = useState(false);
   const [currentLocation, setCurrentLocation] = useState('Home');
 
@@ -15,6 +21,16 @@ export const Menu = ({ moveTo }: { moveTo: (page: Page) => void }) => {
       { name: 'Home', onClick: () => moveTo(pages.initial) },
     ];
   }, [moveTo]);
+
+  useEffect(() => {
+    if (currentPage.id === 'initial') {
+      setCurrentLocation('Home');
+    } else if (currentPage.id === 'nextParty') {
+      setCurrentLocation('Next Party');
+    } else if (currentPage.id === 'partyDetails') {
+      setCurrentLocation('Party Details');
+    }
+  }, [currentPage]);
 
   return (
     <>

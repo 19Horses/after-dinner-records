@@ -57,7 +57,7 @@ export const CurrentLocation = styled.p<{ $show: boolean }>`
   margin-top: 24px;
   margin-right: ${({ $show }) => ($show ? '24px' : '-100px')};
   z-index: 11;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.4s ease-in-out;
   padding: 0;
   color: red;
   writing-mode: vertical-rl;
