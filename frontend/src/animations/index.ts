@@ -24,11 +24,11 @@ export const appear = keyframes`
 
 export const slideIn = keyframes`
   from {
-    opacity: 0;
+    visibility: hidden;
     transform: translateX(50px);
   }
   to {
-    opacity: 1;
+    visibility: visible;
     transform: translateX(0);
   }
 `;

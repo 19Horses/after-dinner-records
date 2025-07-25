@@ -5,8 +5,8 @@ export const Blur = styled.div<{ $show: boolean }>`
   width: 100%;
   height: 100%;
   position: absolute;
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px);
   top: 0;
   left: 0;
   display: flex;
@@ -68,21 +68,29 @@ export const List = styled.ul`
   padding: 0;
   margin-right: 24px;
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
   transition: all 0.4s ease-in-out;
   height: 100%;
+  width: 100%;
   margin: 0;
-  gap: 20px;
+  gap: 30px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+  }
 `;
 
-export const ListItem = styled.button<{ $delay: number }>`
+export const ListItem = styled.button<{ $delay: number; $hoveredOn: boolean }>`
   font-size: 20px;
   font-weight: 800;
   color: black;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  opacity: 0;
+  transition: all 0.6s ease-in-out;
+  opacity: ${({ $hoveredOn }) => ($hoveredOn ? 1 : 0.3)};
   animation: ${slideIn} 0.6s ease-out forwards;
   animation-delay: ${({ $delay }) => $delay}s;
   background-color: transparent;
@@ -91,7 +99,8 @@ export const ListItem = styled.button<{ $delay: number }>`
   text-transform: uppercase;
   padding: 0;
 
-  &:hover {
+  &:hover,
+  &:focus {
     color: red;
   }
 `;

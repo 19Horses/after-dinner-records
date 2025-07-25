@@ -11,6 +11,7 @@ export const Menu = ({
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [currentLocation, setCurrentLocation] = useState('Home');
+  const [hoveredOn, setHoveredOn] = useState<string | null>(null);
 
   const items = useMemo(() => {
     return [
@@ -39,12 +40,16 @@ export const Menu = ({
           <List>
             {items.map((item, index) => (
               <ListItem
+                onPointerOver={() => setHoveredOn(item.name)}
+                onPointerLeave={() => setHoveredOn(null)}
                 key={item.name}
                 $delay={index * 0.1}
+                $hoveredOn={!hoveredOn || hoveredOn === item.name}
                 onClick={() => {
                   setShowMenu(false);
                   item.onClick();
                   setCurrentLocation(item.name);
+                  setHoveredOn(null);
                 }}
               >
                 {item.name}
