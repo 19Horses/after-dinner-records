@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 import { appear, slideIn } from '../../animations';
 
-export const Blur = styled.div<{ $show: boolean }>`
+export const Blur = styled.div<{ $show: boolean; $closeHovered: boolean }>`
   width: 100%;
   height: 100%;
   position: absolute;
@@ -13,7 +13,8 @@ export const Blur = styled.div<{ $show: boolean }>`
   justify-content: flex-end;
   z-index: 10;
   visibility: ${({ $show }) => ($show ? 'visible' : 'hidden')};
-  opacity: ${({ $show }) => ($show ? 1 : 0)};
+  opacity: ${({ $show, $closeHovered }) =>
+    $show ? ($closeHovered ? 0.8 : 1) : 0};
   transition: opacity 0.8s ease-in-out;
   padding: 64px 24px;
   box-sizing: border-box;
@@ -45,6 +46,7 @@ export const MenuButton = styled.button<{ $show: boolean }>`
 
   &:hover {
     opacity: 0.8;
+    color: red;
   }
 `;
 
@@ -84,13 +86,23 @@ export const List = styled.ul`
   }
 `;
 
-export const ListItem = styled.button<{ $delay: number; $hoveredOn: boolean }>`
+export const ListItem = styled.button<{
+  $delay: number;
+  $hoveredOn: boolean;
+  $closeHovered: boolean;
+}>`
   font-size: 20px;
   font-weight: 800;
   color: black;
   cursor: pointer;
   transition: all 0.6s ease-in-out;
-  opacity: ${({ $hoveredOn }) => ($hoveredOn ? 1 : 0.3)};
+  opacity: ${({ $hoveredOn, $closeHovered }) => {
+    console.log($closeHovered);
+    if ($closeHovered) {
+      return 0.4;
+    }
+    return $hoveredOn ? 1 : 0.3;
+  }};
   animation: ${slideIn} 0.6s ease-out forwards;
   animation-delay: ${({ $delay }) => $delay}s;
   background-color: transparent;

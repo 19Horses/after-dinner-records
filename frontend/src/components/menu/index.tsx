@@ -12,6 +12,7 @@ export const Menu = ({
   const [showMenu, setShowMenu] = useState(false);
   const [currentLocation, setCurrentLocation] = useState('Home');
   const [hoveredOn, setHoveredOn] = useState<string | null>(null);
+  const [closeHovered, setCloseHovered] = useState(false);
 
   const items = useMemo(() => {
     return [
@@ -35,7 +36,7 @@ export const Menu = ({
 
   return (
     <>
-      <Blur $show={showMenu}>
+      <Blur $show={showMenu} $closeHovered={closeHovered}>
         {showMenu && (
           <List>
             {items.map((item, index) => (
@@ -45,6 +46,7 @@ export const Menu = ({
                 key={item.name}
                 $delay={index * 0.1}
                 $hoveredOn={!hoveredOn || hoveredOn === item.name}
+                $closeHovered={closeHovered}
                 onClick={() => {
                   setShowMenu(false);
                   item.onClick();
@@ -64,7 +66,12 @@ export const Menu = ({
       >
         {'-> Menu'}
       </MenuButton>
-      <MenuButton $show={showMenu} onClick={() => setShowMenu((prev) => !prev)}>
+      <MenuButton
+        onPointerOver={() => setCloseHovered(true)}
+        onPointerLeave={() => setCloseHovered(false)}
+        $show={showMenu}
+        onClick={() => setShowMenu((prev) => !prev)}
+      >
         x close
       </MenuButton>
       <CurrentLocation $show={!showMenu}>@ {currentLocation}</CurrentLocation>
