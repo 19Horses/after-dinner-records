@@ -1,7 +1,6 @@
 import { Canvas } from '@react-three/fiber';
 import { css, styled } from 'styled-components';
 import { fadeIn } from '../../animations';
-import { isMobile } from 'react-device-detect';
 
 export const Container = styled.div`
   height: 100svh;
@@ -11,7 +10,12 @@ export const Container = styled.div`
   display: flex;
   position: relative;
   overflow-y: scroll;
-  flex-direction: ${isMobile ? 'column' : 'row'};
+  transition: all 0.4s ease-in-out;
+  flex-direction: row;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const Drawer = styled.div<{ $isOpen: boolean; $delay: number }>`

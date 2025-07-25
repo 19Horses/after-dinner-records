@@ -1,13 +1,12 @@
 import { Html } from '@react-three/drei';
 import { styled } from 'styled-components';
+import { PartyType } from '../../queries/useGetParties';
 import {
   DateText,
   Description,
   Lineup,
   TicketLink,
 } from '../PartyHistory/styles';
-import { isMobile } from 'react-device-detect';
-import { PartyType } from '../../queries/useGetParties';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -15,20 +14,37 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  flex-direction: ${isMobile ? 'column' : 'row'};
+  flex-direction: row;
+  transition: all 0.4s ease-in-out;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const Container = styled.div`
-  width: ${isMobile ? '100%' : '50%'};
-  height: ${isMobile ? '45%' : '100%'};
+  width: 50%;
+  height: 100%;
   display: flex;
-  justify-content: ${isMobile ? 'auto' : 'center'};
+  justify-content: center;
   flex-direction: column;
-  padding: ${isMobile ? '0px 30px' : '0px'};
+  padding: 0px;
   box-sizing: border-box;
+  transition: all 0.4s ease-in-out;
 
   & > p {
-    width: ${isMobile ? '100%' : '50%'};
+    width: 50%;
+
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 0px 30px;
+    justify-content: auto;
+    width: 100%;
+    height: 45%;
   }
 `;
 
