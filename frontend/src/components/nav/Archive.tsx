@@ -1,4 +1,4 @@
-import { Page, pages } from '../../pages/pages';
+import { Page, pages } from '../../pages';
 import { ArchiveButton } from './styles';
 
 export const Archive = ({ moveTo }: { moveTo: (page: Page) => void }) => (

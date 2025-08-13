@@ -1,4 +1,4 @@
-import { Page, pages } from '../../pages/pages';
+import { Page, pages } from '../../pages';
 import { CloseButton } from './styles';
 
 export const Close = ({ moveTo }: { moveTo: (page: Page) => void }) => (

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
+import { Page, pages } from '../../pages';
 import { Blur, CurrentLocation, List, ListItem, MenuButton } from './styles';
-import { Page, pages } from '../../pages/pages';
 
 export const Menu = ({
   moveTo,

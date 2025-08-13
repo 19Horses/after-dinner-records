@@ -5,52 +5,44 @@ import { styled } from 'styled-components';
 // eslint-disable-next-line import/named
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import { appear } from '../animations';
-import { Menu } from '../components/menu';
 import { NextPartyPoster } from '../components/NextPartyPoster';
 import { PartyType } from '../queries/useGetParties';
 import { SocialType } from '../queries/useGetSocials';
-import { Page, pages } from './pages';
+import { Page, pages } from '.';
 import { PartyDetails } from './PartyDetails';
 import { PartyHistory } from './PartyHistory';
 import { Socials } from './Socials';
+import { Menu } from '../components/menu/new';
 
 const VerticalTitle = styled.h1`
   position: absolute;
   font-family: 'Bootzy';
-  top: 50%;
+  top: 0;
   left: 0;
-  font-size: 64px;
-  margin-left: 24px;
+  font-size: 36px;
+  margin: 24px;
   transition: all 0.5s ease-in-out;
-  animation: ${appear} 1s ease-in-out;
-  height: 40%;
+  animation: ${appear} 0.3s ease-in-out;
   text-align: center;
-  transform: translate(0, -50%);
-  writing-mode: vertical-rl;
 
   @media (max-width: 768px) {
-    top: 25%;
-    margin-left: 12px;
+    margin: 12px;
   }
 `;
 
 const VerticalLocation = styled.h2`
   position: absolute;
   font-family: 'Bootzy';
-  top: 50%;
+  top: 0;
   right: 0;
   font-size: 36px;
-  margin-right: 24px;
+  margin: 24px;
   transition: all 0.5s ease-in-out;
-  animation: ${appear} 2s ease-in-out;
-  height: 40%;
+  animation: ${appear} 0.5s ease-in-out;
   text-align: center;
-  transform: translate(0, -50%) rotateX(180deg) scaleX(-1);
-  writing-mode: vertical-lr;
 
   @media (max-width: 768px) {
-    top: 25%;
-    margin-right: 12px;
+    margin: 12px;
   }
 `;
 

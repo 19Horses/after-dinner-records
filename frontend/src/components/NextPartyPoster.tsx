@@ -2,7 +2,7 @@ import { useFrame, useLoader } from '@react-three/fiber';
 import { useEffect, useRef, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import * as THREE from 'three';
-import { Page, pages } from '../pages/pages';
+import { Page, pages } from '../pages';
 import { PartyType } from '../queries/useGetParties';
 
 const TARGET = isMobile

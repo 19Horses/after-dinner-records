@@ -2,7 +2,7 @@ import { Box, Flex } from '@react-three/flex';
 import instagramImg from '../../assets/instagram-logo.jpg';
 import spotifyImg from '../../assets/spotify-logo.png';
 import { SocialType } from '../../queries/useGetSocials';
-import { pages } from '../pages';
+import { pages } from '..';
 import { Social } from './Social';
 
 export const Socials = ({ socials }: { socials: SocialType[] }) => {

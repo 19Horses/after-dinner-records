@@ -1,4 +1,4 @@
-import { Page, pages } from '../../pages/pages';
+import { Page, pages } from '../../pages';
 import { Footer, NavButton } from './styles';
 
 export const NavBar = ({
