@@ -79,6 +79,7 @@ export const Description = styled.p`
 
 export const DateText = styled.p<{ $vertical?: boolean }>`
   font-size: 14px;
+  animation: ${fadeIn} 0.3s ease-in-out forwards;
   writing-mode: ${({ $vertical }) => ($vertical ? 'vertical-rl' : 'auto')};
 `;
 

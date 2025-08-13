@@ -133,7 +133,12 @@ export const Landing = ({
           currentPage={page}
         />
         <Socials socials={socials} />
-        {page.id === 'partyDetails' && <PartyDetails party={nextParty} />}
+        {page.id === 'partyDetails' && (
+          <PartyDetails
+            doneTransitioning={doneTransitioning}
+            party={nextParty}
+          />
+        )}
       </Canvas>
       {page.id === 'partyHistory' && (
         <PartyHistory doneTransitioning={doneTransitioning} />

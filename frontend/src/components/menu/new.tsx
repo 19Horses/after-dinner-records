@@ -1,4 +1,3 @@
-import { useEffect, useMemo, useState } from 'react';
 import { styled } from 'styled-components';
 import { appear } from '../../animations';
 import { Page, pages } from '../../pages';
@@ -32,7 +31,10 @@ const VerticalNav = styled.h2`
   }
 
   @media (max-width: 768px) {
-    top: 80%;
+    bottom: 0;
+    top: auto;
+    writing-mode: horizontal-tb;
+    transform: none;
   }
 `;
 
@@ -41,7 +43,8 @@ const LeftNav = styled(VerticalNav)`
   margin-left: 24px;
 
   @media (max-width: 768px) {
-    margin-left: 12px;
+    margin: 12px;
+    transform: none;
   }
 `;
 
@@ -51,42 +54,12 @@ const RightNav = styled(VerticalNav)`
   transform: translate(0, -50%) rotateX(180deg) scaleX(-1);
 
   @media (max-width: 768px) {
-    margin-right: 12px;
+    margin: 12px;
+    transform: none;
   }
 `;
 
-export const Menu = ({
-  moveTo,
-  currentPage,
-}: {
-  moveTo: (page: Page) => void;
-  currentPage: Page;
-}) => {
-  const [showMenu, setShowMenu] = useState(false);
-  const [currentLocation, setCurrentLocation] = useState('Home');
-  const [hoveredOn, setHoveredOn] = useState<string | null>(null);
-  const [closeHovered, setCloseHovered] = useState(false);
-
-  const items = useMemo(() => {
-    return [
-      { name: 'Next Party', onClick: () => moveTo(pages.nextParty) },
-      { name: 'Party Details', onClick: () => moveTo(pages.partyDetails) },
-      { name: 'Archive', onClick: () => moveTo(pages.partyHistory) },
-      { name: 'Socials', onClick: () => moveTo(pages.socials) },
-      { name: 'Home', onClick: () => moveTo(pages.initial) },
-    ];
-  }, [moveTo]);
-
-  useEffect(() => {
-    if (currentPage.id === 'initial') {
-      setCurrentLocation('Home');
-    } else if (currentPage.id === 'nextParty') {
-      setCurrentLocation('Next Party');
-    } else if (currentPage.id === 'partyDetails') {
-      setCurrentLocation('Party Details');
-    }
-  }, [currentPage]);
-
+export const Menu = ({ moveTo }: { moveTo: (page: Page) => void }) => {
   return (
     <>
       <LeftNav onClick={() => moveTo(pages.socials)}>Socials</LeftNav>

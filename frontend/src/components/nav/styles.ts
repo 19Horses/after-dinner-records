@@ -85,6 +85,11 @@ export const EnterButton = styled.button`
   transform: translate(-50%, 0%);
   margin-bottom: 24px;
   z-index: 11;
-  animation: ${appear} 1s ease-in-out;
+  transition: color 0.3s ease-in-out;
+  animation: ${appear} 0.5s ease-in-out;
   text-decoration: underline;
+
+  &:hover {
+    color: red;
+  }
 `;

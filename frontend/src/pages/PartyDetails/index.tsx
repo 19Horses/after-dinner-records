@@ -48,24 +48,32 @@ const Container = styled.div`
   }
 `;
 
-export const PartyDetails = ({ party }: { party: PartyType }) => {
+export const PartyDetails = ({
+  party,
+  doneTransitioning,
+}: {
+  party: PartyType;
+  doneTransitioning: boolean;
+}) => {
   return (
     <Html fullscreen zIndexRange={[0, 0]}>
       <Wrapper>
-        <Container>
-          <DateText>{party.date}</DateText>
-          <Lineup>{party.lineup}</Lineup>
-          <Description>{party.description}</Description>
-          {party.ticketLink && (
-            <TicketLink
-              href={party.ticketLink}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Buy tickets &rarr;
-            </TicketLink>
-          )}
-        </Container>
+        {doneTransitioning && (
+          <Container>
+            <DateText>{party.date}</DateText>
+            <Lineup>{party.lineup}</Lineup>
+            <Description>{party.description}</Description>
+            {party.ticketLink && (
+              <TicketLink
+                href={party.ticketLink}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Buy tickets &rarr;
+              </TicketLink>
+            )}
+          </Container>
+        )}
       </Wrapper>
     </Html>
   );
