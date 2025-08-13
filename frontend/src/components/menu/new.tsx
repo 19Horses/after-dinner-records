@@ -7,10 +7,10 @@ import { Page, pages } from '../../pages';
 // hover effect
 // click and they move to next page
 
-const VerticalNav = styled.h1`
+const VerticalNav = styled.h2`
   position: absolute;
   top: 50%;
-  font-size: 28px;
+  font-size: 24px;
 
   transition: all 0.3s ease-in-out;
   animation: ${appear} 0.3s ease-in-out;
@@ -18,18 +18,21 @@ const VerticalNav = styled.h1`
   transform: translate(0, -50%);
   writing-mode: vertical-rl;
 
+  background-color: black;
+  color: white;
+  padding: 4px;
+
   &:hover {
     color: red;
     cursor: pointer;
   }
 
   &::selection {
-    background-color: black;
-    color: white;
+    background-color: transparent;
   }
 
   @media (max-width: 768px) {
-    top: 75%;
+    top: 80%;
   }
 `;
 
@@ -86,8 +89,8 @@ export const Menu = ({
 
   return (
     <>
-      <LeftNav>Socials</LeftNav>
-      <RightNav>Next Party</RightNav>
+      <LeftNav onClick={() => moveTo(pages.socials)}>Socials</LeftNav>
+      <RightNav onClick={() => moveTo(pages.partyDetails)}>Next Party</RightNav>
     </>
   );
 };

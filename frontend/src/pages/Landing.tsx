@@ -21,24 +21,29 @@ const VerticalTitle = styled.h1`
   left: 0;
   font-size: 36px;
   margin: 24px;
-  transition: all 0.5s ease-in-out;
+  transition: all 0.3s ease-in-out;
   animation: ${appear} 0.3s ease-in-out;
   text-align: center;
 
   @media (max-width: 768px) {
     margin: 12px;
   }
+
+  &:hover {
+    color: red;
+    cursor: pointer;
+  }
 `;
 
-const VerticalLocation = styled.h2`
+const VerticalLocation = styled.h1`
   position: absolute;
   font-family: 'Bootzy';
   top: 0;
   right: 0;
   font-size: 36px;
   margin: 24px;
-  transition: all 0.5s ease-in-out;
-  animation: ${appear} 0.5s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  animation: ${appear} 0.3s ease-in-out;
   text-align: center;
 
   @media (max-width: 768px) {
@@ -113,21 +118,33 @@ export const Landing = ({
           enableRotate={page.id !== 'partyHistory'}
           autoRotateSpeed={0.9}
         />
-        <primitive position={[0, 0, 0]} object={gltf.scene} />
+        <primitive
+          onClick={() => {
+            if (page.id === 'initial') {
+              return moveToPage(pages.nextParty);
+            }
+          }}
+          position={[0, 0, 0]}
+          object={gltf.scene}
+        />
         <NextPartyPoster
           nextParty={nextParty}
           moveTo={moveToPage}
           currentPage={page}
         />
         <Socials socials={socials} />
-        {page.id === 'partyHistory' && (
-          <PartyHistory doneTransitioning={doneTransitioning} />
-        )}
         {page.id === 'partyDetails' && <PartyDetails party={nextParty} />}
       </Canvas>
+      {page.id === 'partyHistory' && (
+        <PartyHistory doneTransitioning={doneTransitioning} />
+      )}
       {page.id !== 'splash' && <Menu moveTo={moveToPage} currentPage={page} />}
-      {page.id === 'initial' && <VerticalTitle>ADR</VerticalTitle>}
-      {page.id === 'initial' && <VerticalLocation>Garden</VerticalLocation>}
+      {page.id !== 'splash' && (
+        <VerticalTitle onClick={() => moveToPage(pages.initial)}>
+          ADR
+        </VerticalTitle>
+      )}
+      {page.id !== 'splash' && <VerticalLocation>Garden</VerticalLocation>}
     </>
   );
 };
