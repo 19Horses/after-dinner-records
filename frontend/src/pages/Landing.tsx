@@ -12,7 +12,7 @@ import { Page, pages } from '.';
 import { PartyDetails } from './PartyDetails';
 import { PartyHistory } from './PartyHistory';
 import { Socials } from './Socials';
-import { Menu } from '../components/menu/again';
+import { Menu } from '../components/menu';
 
 const VerticalTitle = styled.h1`
   position: absolute;
@@ -151,7 +151,7 @@ export const Landing = ({
       {page.id === 'partyHistory' && (
         <PartyHistory doneTransitioning={doneTransitioning} />
       )}
-      {page.id !== 'splash' && <Menu moveTo={moveToPage} currentPage={page} />}
+      {page.id !== 'splash' && <Menu moveTo={moveToPage} />}
       {page.id !== 'splash' && (
         <VerticalTitle onClick={() => moveToPage(pages.initial)}>
           ADR

@@ -1,118 +1,51 @@
 import { styled } from 'styled-components';
-import { appear, slideIn } from '../../animations';
+import { appear } from '../../animations';
 
-export const Blur = styled.div<{ $show: boolean; $closeHovered: boolean }>`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  -webkit-backdrop-filter: blur(30px);
-  backdrop-filter: blur(30px);
-  top: 0;
-  left: 0;
+export const BlurMenu = styled.div`
   display: flex;
-  justify-content: flex-end;
-  z-index: 10;
-  visibility: ${({ $show }) => ($show ? 'visible' : 'hidden')};
-  opacity: ${({ $show, $closeHovered }) =>
-    $show ? ($closeHovered ? 0.8 : 1) : 0};
-  transition: opacity 0.8s ease-in-out;
-  padding: 64px 24px;
-  box-sizing: border-box;
+  margin: 10px 0;
+  background: rgba(255, 255, 255, 0.6);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  color: #000;
+  padding: 12px 15px 10px;
+  border: 1px solid rgba(40, 40, 40, 0.3);
+  border-radius: 25px;
+  justify-content: space-between;
+  position: fixed;
+  z-index: 20;
+  bottom: 20px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  animation: ${appear} 0.3s ease-in-out;
 
   @media (max-width: 768px) {
-    bottom: 0;
-    top: auto;
-    margin-top: 0px;
-    margin-bottom: 24px;
+    bottom: 10px;
+    padding: 8px 10px 6px;
+    width: 60%;
   }
 `;
-
-export const MenuButton = styled.button<{ $show: boolean }>`
-  cursor: pointer;
-  color: black;
-  background-color: transparent;
-  border: none;
-  outline: none;
-  font-size: 16px;
-  position: fixed;
-  right: 0;
-  top: 0;
-  animation: ${appear} 1s ease-in-out;
-  margin-right: ${({ $show }) => ($show ? '24px' : '-100px')};
-  margin-top: 24px;
-  z-index: 11;
-  transition: all 0.2s ease-in-out;
+export const List = styled.ul`
+  display: flex;
+  list-style: none;
+  flex-direction: row;
+  justify-content: center;
+  margin: 0;
+  width: 100%;
   padding: 0;
+`;
+export const ListItem = styled.li`
+  margin: 0 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: color 0.3s ease-in-out;
+  text-transform: uppercase;
 
   &:hover {
-    opacity: 0.8;
     color: red;
   }
-`;
 
-export const CurrentLocation = styled.p<{ $show: boolean }>`
-  font-size: 16px;
-  position: fixed;
-  right: 0;
-  top: 32px;
-  animation: ${appear} 1s ease-in-out;
-  margin-top: 24px;
-  margin-right: ${({ $show }) => ($show ? '24px' : '-100px')};
-  z-index: 11;
-  transition: all 0.4s ease-in-out;
-  padding: 0;
-  color: red;
-  writing-mode: vertical-rl;
-`;
-
-export const List = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin-right: 24px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-evenly;
-  transition: all 0.4s ease-in-out;
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  gap: 30px;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    justify-content: center;
-    gap: 20px;
-  }
-`;
-
-export const ListItem = styled.button<{
-  $delay: number;
-  $hoveredOn: boolean;
-  $closeHovered: boolean;
-}>`
-  font-size: 20px;
-  font-weight: 800;
-  color: black;
-  cursor: pointer;
-  transition: all 0.6s ease-in-out;
-  opacity: ${({ $hoveredOn, $closeHovered }) => {
-    console.log($closeHovered);
-    if ($closeHovered) {
-      return 0.4;
-    }
-    return $hoveredOn ? 1 : 0.3;
-  }};
-  animation: ${slideIn} 0.6s ease-out forwards;
-  animation-delay: ${({ $delay }) => $delay}s;
-  background-color: transparent;
-  border: none;
-  outline: none;
-  text-transform: uppercase;
-  padding: 0;
-
-  &:hover,
-  &:focus {
-    color: red;
+  &::selection {
+    background-color: transparent;
   }
 `;
