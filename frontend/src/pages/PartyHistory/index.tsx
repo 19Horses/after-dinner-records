@@ -1,5 +1,5 @@
 import { Html } from '@react-three/drei';
-import { pages } from '../pages';
+import { pages } from '..';
 import { PartyHistoryContent } from './PartyHistory';
 import { useGetParties } from '../../queries/useGetParties';
 

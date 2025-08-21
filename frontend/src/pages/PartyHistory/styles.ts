@@ -1,7 +1,6 @@
 import { Canvas } from '@react-three/fiber';
 import { css, styled } from 'styled-components';
 import { fadeIn } from '../../animations';
-import { isMobile } from 'react-device-detect';
 
 export const Container = styled.div`
   height: 100svh;
@@ -11,7 +10,12 @@ export const Container = styled.div`
   display: flex;
   position: relative;
   overflow-y: scroll;
-  flex-direction: ${isMobile ? 'column' : 'row'};
+  transition: all 0.4s ease-in-out;
+  flex-direction: row;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const Drawer = styled.div<{ $isOpen: boolean; $delay: number }>`
@@ -28,7 +32,7 @@ export const Drawer = styled.div<{ $isOpen: boolean; $delay: number }>`
   cursor: pointer;
   background-color: white;
 
-  animation: ${fadeIn} 0.5s ease-in-out forwards;
+  animation: ${fadeIn} 0.3s ease-in-out forwards;
   animation-delay: ${(props) => props.$delay ?? 0}s;
 
   &:hover,
@@ -60,7 +64,7 @@ export const Content = styled.div`
 `;
 
 export const PartyImage = styled.img`
-  animation: ${fadeIn} 0.5s ease-in-out forwards;
+  animation: ${fadeIn} 0.3s ease-in-out forwards;
   width: 50%;
   max-width: 250px;
   align-self: center;
@@ -70,23 +74,23 @@ export const PartyImage = styled.img`
 
 export const Description = styled.p`
   font-size: 16px;
-  animation: ${fadeIn} 0.5s ease-in-out forwards;
+  animation: ${fadeIn} 0.3s ease-in-out forwards;
 `;
 
 export const DateText = styled.p<{ $vertical?: boolean }>`
   font-size: 14px;
-  animation: ${fadeIn} 0.5s ease-in-out forwards;
+  animation: ${fadeIn} 0.3s ease-in-out forwards;
   writing-mode: ${({ $vertical }) => ($vertical ? 'vertical-rl' : 'auto')};
 `;
 
 export const Lineup = styled.p`
   font-style: italic;
   font-size: 20px;
-  animation: ${fadeIn} 0.5s ease-in-out forwards;
+  animation: ${fadeIn} 0.3s ease-in-out forwards;
 `;
 
 export const CanvasForPartyPoster = styled(Canvas)`
-  animation: ${fadeIn} 0.5s ease-in-out forwards;
+  animation: ${fadeIn} 0.3s ease-in-out forwards;
   max-height: 50%;
 `;
 
@@ -95,7 +99,12 @@ export const TicketLink = styled.a`
   color: black;
   text-decoration: underline;
   font-size: 16px;
-  animation: ${fadeIn} 0.5s ease-in-out forwards;
+  transition: color 0.3s ease-in-out;
+  animation: ${fadeIn} 0.3s ease-in-out forwards;
   justify-self: flex-end;
   margin: 16px 0px;
+
+  &:hover {
+    color: red;
+  }
 `;

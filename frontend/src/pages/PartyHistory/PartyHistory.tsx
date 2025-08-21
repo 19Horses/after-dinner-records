@@ -1,7 +1,7 @@
 import { Html } from '@react-three/drei';
 import { useState } from 'react';
 import { PartyType } from '../../queries/useGetParties';
-import { pages } from '../pages';
+import { pages } from '..';
 import { Party } from './Party';
 import { Container } from './styles';
 

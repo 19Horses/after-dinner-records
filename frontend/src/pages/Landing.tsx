@@ -1,49 +1,54 @@
 import { OrbitControls } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { isMobile } from 'react-device-detect';
 import { styled } from 'styled-components';
 // eslint-disable-next-line import/named
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import { appear } from '../animations';
-import { NavBar } from '../components/nav';
-import { Archive } from '../components/nav/Archive';
-import { Back } from '../components/nav/Back';
-import { Close } from '../components/nav/Close';
 import { NextPartyPoster } from '../components/NextPartyPoster';
 import { PartyType } from '../queries/useGetParties';
-import { Page, pages } from './pages';
+import { SocialType } from '../queries/useGetSocials';
+import { Page, pages } from '.';
 import { PartyDetails } from './PartyDetails';
 import { PartyHistory } from './PartyHistory';
 import { Socials } from './Socials';
-import { SocialType } from '../queries/useGetSocials';
+import { Menu } from '../components/menu';
 
 const VerticalTitle = styled.h1`
   position: absolute;
   font-family: 'Bootzy';
-  top: ${isMobile ? '25%' : '50%'};
+  top: 0;
   left: 0;
-  font-size: 64px;
-  margin-left: ${isMobile ? '12px' : '24px'};
-  animation: ${appear} 1s ease-in-out;
-  height: 40%;
+  font-size: 36px;
+  margin: 24px;
+  transition: all 0.3s ease-in-out;
+  animation: ${appear} 0.3s ease-in-out;
   text-align: center;
-  transform: translate(0, -50%);
-  writing-mode: vertical-rl;
+
+  @media (max-width: 768px) {
+    margin: 12px;
+  }
+
+  &:hover {
+    color: red;
+    cursor: pointer;
+  }
 `;
 
-const VerticalLocation = styled.h2`
+const VerticalLocation = styled.h1`
   position: absolute;
   font-family: 'Bootzy';
-  top: ${isMobile ? '25%' : '50%'};
+  top: 0;
   right: 0;
   font-size: 36px;
-  margin-right: ${isMobile ? '12px' : '24px'};
-  animation: ${appear} 2s ease-in-out;
-  height: 40%;
+  margin: 24px;
+  transition: all 0.3s ease-in-out;
+  animation: ${appear} 0.3s ease-in-out;
   text-align: center;
-  transform: translate(0, -50%) rotateX(180deg) scaleX(-1);
-  writing-mode: vertical-lr;
+
+  @media (max-width: 768px) {
+    margin: 12px;
+  }
 `;
 
 const EPSILON = 1;
@@ -53,14 +58,18 @@ export const Landing = ({
   gltf,
   nextParty,
   socials,
+  parties,
 }: {
   isAtSplash: boolean;
   gltf: GLTF;
   nextParty: PartyType;
+  parties: PartyType[];
   socials: SocialType[];
 }) => {
-  const [pageStack, setPageStack] = useState([pages.initial]);
   const [page, setPage] = useState(pages.splash);
+  const [partyPoster, setPartyPoster] = useState<string>(
+    nextParty.poster.asset.url
+  );
   const lookAtRef = useRef(pages.splash.camera.lookAt);
   const [doneTransitioning, setDoneTransitioning] = useState(false);
 
@@ -95,19 +104,12 @@ export const Landing = ({
 
   const moveToPage = useCallback(
     (page: Page) => {
+      setPartyPoster(nextParty.poster.asset.url);
       setDoneTransitioning(false);
       setPage(page);
-      setPageStack((prev) => [...prev, page]);
     },
-    [pageStack, page]
+    [page]
   );
-
-  const goBack = useCallback(() => {
-    const copiedStack = [...pageStack];
-    copiedStack.pop();
-    moveToPage(copiedStack[copiedStack.length - 1] || pages.initial);
-    setPageStack(copiedStack);
-  }, [pageStack]);
 
   return (
     <>
@@ -118,34 +120,44 @@ export const Landing = ({
         <OrbitControls
           autoRotate={isAtSplash}
           enableZoom={false}
-          enablePan={page.id !== 'partyHistory'}
-          enableRotate={page.id !== 'partyHistory'}
+          enablePan={page.id !== 'partyDetails'}
+          enableRotate={page.id !== 'partyDetails'}
           autoRotateSpeed={0.9}
         />
-        <primitive position={[0, 0, 0]} object={gltf.scene} />
+        <primitive
+          onClick={() => {
+            if (page.id === 'initial') {
+              return moveToPage(pages.nextParty);
+            }
+          }}
+          position={[0, 0, 0]}
+          object={gltf.scene}
+        />
         <NextPartyPoster
-          nextParty={nextParty}
           moveTo={moveToPage}
           currentPage={page}
+          posterUrl={partyPoster}
         />
         <Socials socials={socials} />
-        {page.id === 'partyHistory' && (
-          <PartyHistory doneTransitioning={doneTransitioning} />
+        {page.id === 'partyDetails' && (
+          <PartyDetails
+            doneTransitioning={doneTransitioning}
+            nextParty={nextParty}
+            parties={parties}
+            updatePoster={(url: string) => setPartyPoster(url)}
+          />
         )}
-        {page.id === 'partyDetails' && <PartyDetails party={nextParty} />}
       </Canvas>
-      {page.id === 'initial' && <VerticalTitle>ADR</VerticalTitle>}
-      {page.id === 'initial' && <VerticalLocation>Garden</VerticalLocation>}
-      {!isAtSplash && page.id !== 'partyHistory' && (
-        <NavBar currentPage={page} moveTo={moveToPage} />
+      {page.id === 'partyHistory' && (
+        <PartyHistory doneTransitioning={doneTransitioning} />
       )}
+      {page.id !== 'splash' && <Menu moveTo={moveToPage} />}
       {page.id !== 'splash' && (
-        <>
-          {page.id !== 'initial' && <Close moveTo={moveToPage} />}
-          {page.id !== 'initial' && <Back goBack={goBack} />}
-        </>
+        <VerticalTitle onClick={() => moveToPage(pages.initial)}>
+          ADR
+        </VerticalTitle>
       )}
-      {page.id === 'partyDetails' && <Archive moveTo={moveToPage} />}
+      {page.id !== 'splash' && <VerticalLocation>Garden</VerticalLocation>}
     </>
   );
 };

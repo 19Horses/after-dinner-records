@@ -59,6 +59,7 @@ export const Splash = () => {
         isAtSplash={isAtSplash}
         gltf={gltf}
         nextParty={parties[parties.length - 1]}
+        parties={parties}
         socials={socials}
       />
       {isAtSplash && (

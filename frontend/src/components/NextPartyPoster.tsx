@@ -2,8 +2,7 @@ import { useFrame, useLoader } from '@react-three/fiber';
 import { useEffect, useRef, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import * as THREE from 'three';
-import { Page, pages } from '../pages/pages';
-import { PartyType } from '../queries/useGetParties';
+import { Page, pages } from '../pages';
 
 const TARGET = isMobile
   ? new THREE.Vector3(
@@ -19,11 +18,11 @@ const TARGET = isMobile
 export const NextPartyPoster = ({
   currentPage,
   moveTo,
-  nextParty,
+  posterUrl,
 }: {
   currentPage: Page;
   moveTo: (newCamera: Page) => void;
-  nextParty: PartyType;
+  posterUrl: string;
 }) => {
   const [hovered, setHovered] = useState(false);
   const [movingToTarget, setMovingToTarget] = useState(false);
@@ -50,10 +49,14 @@ export const NextPartyPoster = ({
     useRef<THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial>>(null);
 
   useEffect(() => {
+    if (currentPage.id === 'partyDetails') {
+      document.body.style.cursor = 'auto';
+      return;
+    }
     document.body.style.cursor = hovered ? 'pointer' : 'auto';
-  }, [hovered]);
+  }, [hovered, currentPage]);
 
-  const texture = useLoader(THREE.TextureLoader, nextParty.poster.asset.url);
+  const texture = useLoader(THREE.TextureLoader, posterUrl);
 
   useFrame((state, delta) => {
     const mesh = meshRef.current;
