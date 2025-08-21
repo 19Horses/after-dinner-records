@@ -19,11 +19,11 @@ const TARGET = isMobile
 export const NextPartyPoster = ({
   currentPage,
   moveTo,
-  nextParty,
+  posterUrl,
 }: {
   currentPage: Page;
   moveTo: (newCamera: Page) => void;
-  nextParty: PartyType;
+  posterUrl: string;
 }) => {
   const [hovered, setHovered] = useState(false);
   const [movingToTarget, setMovingToTarget] = useState(false);
@@ -57,7 +57,7 @@ export const NextPartyPoster = ({
     document.body.style.cursor = hovered ? 'pointer' : 'auto';
   }, [hovered, currentPage]);
 
-  const texture = useLoader(THREE.TextureLoader, nextParty.poster.asset.url);
+  const texture = useLoader(THREE.TextureLoader, posterUrl);
 
   useFrame((state, delta) => {
     const mesh = meshRef.current;

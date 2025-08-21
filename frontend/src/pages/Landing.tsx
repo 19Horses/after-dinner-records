@@ -12,7 +12,7 @@ import { Page, pages } from '.';
 import { PartyDetails } from './PartyDetails';
 import { PartyHistory } from './PartyHistory';
 import { Socials } from './Socials';
-import { Menu } from '../components/menu/new';
+import { Menu } from '../components/menu/again';
 
 const VerticalTitle = styled.h1`
   position: absolute;
@@ -58,13 +58,18 @@ export const Landing = ({
   gltf,
   nextParty,
   socials,
+  parties,
 }: {
   isAtSplash: boolean;
   gltf: GLTF;
   nextParty: PartyType;
+  parties: PartyType[];
   socials: SocialType[];
 }) => {
   const [page, setPage] = useState(pages.splash);
+  const [partyPoster, setPartyPoster] = useState<string>(
+    nextParty.poster.asset.url
+  );
   const lookAtRef = useRef(pages.splash.camera.lookAt);
   const [doneTransitioning, setDoneTransitioning] = useState(false);
 
@@ -99,6 +104,7 @@ export const Landing = ({
 
   const moveToPage = useCallback(
     (page: Page) => {
+      setPartyPoster(nextParty.poster.asset.url);
       setDoneTransitioning(false);
       setPage(page);
     },
@@ -114,8 +120,8 @@ export const Landing = ({
         <OrbitControls
           autoRotate={isAtSplash}
           enableZoom={false}
-          enablePan={page.id !== 'partyHistory'}
-          enableRotate={page.id !== 'partyHistory'}
+          enablePan={page.id !== 'partyDetails'}
+          enableRotate={page.id !== 'partyDetails'}
           autoRotateSpeed={0.9}
         />
         <primitive
@@ -128,15 +134,17 @@ export const Landing = ({
           object={gltf.scene}
         />
         <NextPartyPoster
-          nextParty={nextParty}
           moveTo={moveToPage}
           currentPage={page}
+          posterUrl={partyPoster}
         />
         <Socials socials={socials} />
         {page.id === 'partyDetails' && (
           <PartyDetails
             doneTransitioning={doneTransitioning}
-            party={nextParty}
+            nextParty={nextParty}
+            parties={parties}
+            updatePoster={(url: string) => setPartyPoster(url)}
           />
         )}
       </Canvas>

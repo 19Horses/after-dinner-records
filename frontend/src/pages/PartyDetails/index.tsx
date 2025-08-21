@@ -1,12 +1,8 @@
 import { Html } from '@react-three/drei';
+import { useState } from 'react';
 import { styled } from 'styled-components';
 import { PartyType } from '../../queries/useGetParties';
-import {
-  DateText,
-  Description,
-  Lineup,
-  TicketLink,
-} from '../PartyHistory/styles';
+import { Details } from './Details';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -22,57 +18,65 @@ const Wrapper = styled.div`
   }
 `;
 
-const Container = styled.div`
-  width: 50%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  padding: 0px;
-  box-sizing: border-box;
-  transition: all 0.4s ease-in-out;
+const Arrow = styled.div`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 48px;
 
-  & > p {
-    width: 50%;
-
-    @media (max-width: 768px) {
-      width: 100%;
-    }
-  }
-
-  @media (max-width: 768px) {
-    padding: 0px 30px;
-    justify-content: auto;
-    width: 100%;
-    height: 45%;
+  &:hover {
+    color: red;
+    cursor: pointer;
   }
 `;
 
+const LeftArrow = styled(Arrow)`
+  left: 24px;
+`;
+
+const RightArrow = styled(Arrow)`
+  right: 24px;
+`;
+
 export const PartyDetails = ({
-  party,
+  nextParty,
   doneTransitioning,
+  parties,
+  updatePoster,
 }: {
-  party: PartyType;
+  nextParty: PartyType;
+  parties: PartyType[];
   doneTransitioning: boolean;
+  updatePoster: (url: string) => void;
 }) => {
+  const [currentParty, setCurrentParty] = useState<PartyType>(nextParty);
+
+  const currentIndex = parties.findIndex(
+    (party) => party._id === currentParty._id
+  );
+
+  const moveToPreviousParty = () => {
+    const previousParty = parties[currentIndex - 1];
+    setCurrentParty(previousParty);
+    updatePoster(previousParty.poster.asset.url);
+  };
+
+  const moveToNextParty = () => {
+    const nextParty = parties[currentIndex + 1];
+    setCurrentParty(nextParty);
+    updatePoster(nextParty.poster.asset.url);
+  };
   return (
     <Html fullscreen zIndexRange={[0, 0]}>
       <Wrapper>
-        {doneTransitioning && (
-          <Container>
-            <DateText>{party.date}</DateText>
-            <Lineup>{party.lineup}</Lineup>
-            <Description>{party.description}</Description>
-            {party.ticketLink && (
-              <TicketLink
-                href={party.ticketLink}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Buy tickets &rarr;
-              </TicketLink>
-            )}
-          </Container>
+        {currentIndex > 0 && (
+          <LeftArrow onClick={() => moveToPreviousParty()}>&larr;</LeftArrow>
+        )}
+        {doneTransitioning && <Details party={currentParty} />}
+        {currentIndex < parties.length - 1 && (
+          <RightArrow onClick={() => moveToNextParty()}>&rarr;</RightArrow>
         )}
       </Wrapper>
     </Html>

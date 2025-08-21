@@ -33,7 +33,9 @@ button {
   height: 100%;
 }
 
-h1::selection {
+h1::selection,
+p::selection,
+a::selection {
   background-color: black;
   color: white;
 }
